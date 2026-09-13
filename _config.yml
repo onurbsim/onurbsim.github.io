@@ -1,0 +1,51 @@
+# ---------------------------------------------------------------------------
+# onurb - site configuration
+# Edit the values in this file, then commit. GitHub Pages rebuilds on push.
+# ---------------------------------------------------------------------------
+
+title:    "onurb"
+subtitle: "An open-source bus simulator engine"
+tagline:  "OMSI 2 compatible. Written from scratch in C++."
+email:    ""
+description: >-
+  onurb is a free, open-source reimplementation of the OMSI 2 bus simulator
+  engine, written in C++. It loads original OMSI 2 maps, buses and objects,
+  and also drives the Midtown Madness 2 world format through the same engine.
+
+# --- CHANGE THESE TWO LINES ------------------------------------------------
+# url    = https://<your-github-username>.github.io
+# baseurl = /<repository-name>   (leave empty "" if repo is <username>.github.io)
+url:     "https://YOUR-USERNAME.github.io"
+baseurl: "/onurb-site"
+# ---------------------------------------------------------------------------
+
+github_repo: "https://github.com/YOUR-USERNAME/onurb"
+download_url: "https://github.com/YOUR-USERNAME/onurb/releases/latest"
+
+# Scrolling ticker under the navigation bar. Keep it short.
+ticker: "*** WELCOME TO THE ONURB HOMEPAGE *** NEW BUILD AVAILABLE *** NOW DRIVING MIDTOWN MADNESS 2 MAPS *** SIGN THE GUESTBOOK ***"
+
+# Navigation buttons, in order.
+nav:
+  - { title: "HOME",    url: "/" }
+  - { title: "ABOUT",   url: "/about/" }
+  - { title: "NEWS",    url: "/news/" }
+  - { title: "GALLERY", url: "/gallery/" }
+  - { title: "VIDEOS",  url: "/videos/" }
+
+# Blog/news permalinks
+permalink: /news/:year/:month/:day/:title/
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+defaults:
+  - scope: { path: "", type: "posts" }
+    values: { layout: "post" }
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor

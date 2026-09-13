@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- seo -%}
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
+  {%- feed_meta -%}
+</head>
+<body>
+
+<div id="wrap">
+
+  <div id="banner">
+    <p class="logo"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></p>
+    <p class="sub">{{ site.tagline }}</p>
+  </div>
+
+  <div id="nav">
+    {%- for item in site.nav -%}
+      {%- assign href = item.url | relative_url -%}
+      <a href="{{ href }}"{% if page.url == item.url %} class="here"{% endif %}>{{ item.title }}</a>
+    {%- endfor -%}
+  </div>
+
+  <div id="ticker"><span>{{ site.ticker }}</span></div>
+
+  <div id="main">
+    {{ content }}
+  </div>
+
+  <div id="foot">
+    <p>
+      <a href="{{ site.github_repo }}">Source on GitHub</a> &middot;
+      <a href="{{ '/feed.xml' | relative_url }}">RSS</a> &middot;
+      <a href="{{ '/about/' | relative_url }}">About</a>
+    </p>
+    <p>
+      You are visitor number<br>
+      <span class="counter" id="hits">000000</span>
+    </p>
+    <p>
+      <span class="badge">BEST VIEWED AT 800x600</span>
+      <span class="badge">MADE ON A PC</span>
+      <span class="badge">UNDER CONSTRUCTION</span>
+    </p>
+    <p>
+      &copy; {{ site.time | date: "%Y" }} the onurb project.
+      Not affiliated with M-R Software or Microsoft.
+    </p>
+  </div>
+
+</div>
+
+<script src="{{ '/assets/js/site.js' | relative_url }}"></script>
+</body>
+</html>

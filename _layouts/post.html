@@ -1,0 +1,28 @@
+---
+layout: default
+---
+<div class="win">
+  <b class="win-t">NEWS</b>
+  <div class="win-b">
+
+    <p><span class="stamp">{{ page.date | date: "%d %b %Y" }}</span></p>
+    <h2>{{ page.title }}</h2>
+
+    {%- if page.image %}
+    <p class="hero">
+      <img src="{{ page.image | relative_url }}" alt="{{ page.title }}">
+    </p>
+    {%- endif %}
+
+    {{ content }}
+
+    <hr>
+    <p>
+      <a class="btn alt" href="{{ '/news/' | relative_url }}">&laquo; All news</a>
+      {%- if page.next %}
+      <a class="btn" href="{{ page.next.url | relative_url }}">Newer &raquo;</a>
+      {%- endif %}
+    </p>
+
+  </div>
+</div>
