@@ -68,8 +68,10 @@ hero_caption: "Driving an OMSI 2 map in the onurb engine."
 <div class="win">
   <b class="win-t">LATEST VIDEO</b>
   <div class="win-b">
-    <a class="thumb play" href="{{ '/videos/' | relative_url }}">
-      <img src="https://img.youtube.com/vi/{{ vid.youtube_id }}/hqdefault.jpg" alt="{{ vid.title }}">
+    <a class="thumb" href="{{ '/videos/' | relative_url }}">
+      <span class="shot">
+        <img src="https://img.youtube.com/vi/{{ vid.youtube_id }}/hqdefault.jpg" alt="{{ vid.title }}">
+      </span>
       <span class="t">{{ vid.title }}</span>
       <span class="d">{{ vid.date }}</span>
     </a>

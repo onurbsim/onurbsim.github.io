@@ -77,10 +77,18 @@ The reusable pieces:
 |---|---|
 | `.win` + `.win-t` + `.win-b` | Windows 95 style titled panel |
 | `.btn` / `.btn.alt` | Beveled orange / navy button |
-| `.grid` / `.grid.two` | Responsive card grid |
+| `.grid` / `.grid.two` | Responsive card grid, one column on a phone |
 | `.thumb` | Gallery or video card |
+| `.shot` | Wrapper that puts a play triangle over a thumbnail |
 | `.hero` | Full-width image with caption overlay |
 | `.stamp` | Small amber date tag |
+| `.table-wrap` | Wrap any `<table>` in this so it scrolls instead of the page |
+
+The layout is fluid: `clamp()` for type and spacing, `auto-fit` grids for the
+nav and the card rows, `aspect-ratio` for thumbnails. It holds from 320px up,
+and stops growing at 860px because a fixed centre column is the look. Four
+breakpoints (760 / 520 / 380 / 1400px) plus a print stylesheet are at the
+bottom of the file.
 
 ## Previewing locally (optional)
 

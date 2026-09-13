@@ -15,10 +15,12 @@ permalink: /videos/
 
     <div class="grid two">
       {%- for vid in site.data.videos %}
-      <a class="thumb play" href="https://www.youtube.com/watch?v={{ vid.youtube_id }}"
+      <a class="thumb" href="https://www.youtube.com/watch?v={{ vid.youtube_id }}"
          data-yt="{{ vid.youtube_id }}">
-        <img src="https://img.youtube.com/vi/{{ vid.youtube_id }}/hqdefault.jpg"
-             alt="{{ vid.title | escape }}" loading="lazy">
+        <span class="shot">
+          <img src="https://img.youtube.com/vi/{{ vid.youtube_id }}/hqdefault.jpg"
+               alt="{{ vid.title | escape }}" loading="lazy">
+        </span>
         <span class="t">{{ vid.title }}</span>
         {%- if vid.date %}<span class="d">{{ vid.date }}</span>{% endif %}
       </a>

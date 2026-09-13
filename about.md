@@ -26,6 +26,7 @@ So: a new engine, the old files.
 
 ## Status
 
+<div class="table-wrap">
 <table>
   <tr><th>Area</th><th>State</th></tr>
   <tr><td>OMSI 2 map loading (tiles, terrain, splines)</td><td>Working</td></tr>
@@ -35,6 +36,7 @@ So: a new engine, the old files.
   <tr><td>Midtown Madness 2 world format</td><td>Working</td></tr>
   <tr><td>AI traffic and timetables</td><td>Planned</td></tr>
 </table>
+</div>
 
 <p style="font-size:11px; color:#4d6076;">
 Keep this table honest - it is the first thing anyone reads.

@@ -29,12 +29,26 @@
 
 /* --------------------------------------------------------------------------
    Page frame
+
+   The 1990s part is the look, not the fixed 820px table. The shell below is
+   fluid: one max width, side gutters that never collapse, and type that
+   scales with the viewport. Nothing here has a min-width wider than a phone,
+   so the page never scrolls sideways.
    -------------------------------------------------------------------------- */
+
+* { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
   margin: 0;
-  padding: 18px 12px 40px;
-  font: 13px/1.6 Verdana, Geneva, "DejaVu Sans", sans-serif;
+  padding-block: clamp(8px, 2vw, 18px) 40px;
+  padding-inline: clamp(6px, 2vw, 12px);
+  overflow-wrap: break-word;
+  font: clamp(12.5px, 12px + .15vw, 13.5px)/1.6 Verdana, Geneva, "DejaVu Sans", sans-serif;
   color: var(--ink);
   background-color: var(--asphalt);
   /* tiled "asphalt" background - a real 90s tiled backdrop, drawn in CSS so
@@ -49,8 +63,7 @@ body {
 }
 
 #wrap {
-  width: 820px;
-  max-width: 100%;
+  width: min(860px, 100%);
   margin: 0 auto;
   background: var(--cream);
   border: 3px outset var(--steel-lt);
@@ -63,7 +76,7 @@ body {
 
 #banner {
   position: relative;
-  padding: 18px 16px 14px;
+  padding: clamp(12px, 3vw, 18px) clamp(10px, 3vw, 16px) clamp(10px, 2.5vw, 14px);
   text-align: center;
   border-bottom: 3px solid var(--navy);
   background: linear-gradient(180deg, var(--sky-lt) 0%, var(--sky) 55%, var(--steel) 100%);
@@ -91,9 +104,9 @@ body {
   z-index: 2;
   margin: 0;
   font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
-  font-size: 62px;
+  font-size: clamp(38px, 9vw, 62px);
   line-height: .95;
-  letter-spacing: 2px;
+  letter-spacing: clamp(1px, .3vw, 2px);
   text-transform: uppercase;
   color: var(--amber);
   background: linear-gradient(180deg, #fff1b8 0%, var(--amber) 45%, var(--orange) 100%);
@@ -121,9 +134,11 @@ body {
    Navigation - a row of chunky beveled buttons
    -------------------------------------------------------------------------- */
 
+/* auto-fit: five buttons in a row on a desktop, two or three on a phone,
+   always filling the width evenly - no half-empty last row */
 #nav {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
   gap: 4px;
   padding: 6px;
   background: linear-gradient(180deg, var(--steel-lt), var(--steel));
@@ -131,10 +146,9 @@ body {
 }
 
 #nav a {
-  flex: 1 1 auto;
-  padding: 6px 10px;
+  padding: 9px 8px;
   text-align: center;
-  font: bold 12px/1 Verdana, Geneva, sans-serif;
+  font: bold clamp(11px, 2.6vw, 12px)/1 Verdana, Geneva, sans-serif;
   letter-spacing: 1px;
   color: var(--navy);
   text-decoration: none;
@@ -186,7 +200,9 @@ body {
    Content
    -------------------------------------------------------------------------- */
 
-#main { padding: 18px; }
+#main { padding: clamp(10px, 2.6vw, 18px); }
+
+#main img { max-width: 100%; height: auto; }
 
 a         { color: var(--link); }
 a:visited { color: var(--link-vis); }
@@ -199,12 +215,12 @@ h2, h3 {
 }
 
 h2 {
-  font-size: 20px;
+  font-size: clamp(17px, 4vw, 20px);
   border-bottom: 2px solid var(--orange);
   padding-bottom: 3px;
 }
 
-h3 { font-size: 15px; }
+h3 { font-size: clamp(14px, 3.2vw, 15px); }
 
 hr {
   height: 3px;
@@ -233,10 +249,22 @@ pre { padding: 10px; overflow-x: auto; }
 
 pre code { border: 0; padding: 0; background: none; }
 
+/* a table is the one thing allowed to be wider than the column - put it in
+   <div class="table-wrap"> and it scrolls on its own instead of pushing the
+   whole page sideways */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 12px 0;
+  border: 1px solid var(--steel);
+}
+
 table { border-collapse: collapse; width: 100%; }
 
+.table-wrap table { border: 0; }
+
 th, td {
-  padding: 5px 8px;
+  padding: 6px 8px;
   border: 1px solid var(--steel);
   text-align: left;
   font-size: 12px;
@@ -266,7 +294,7 @@ th { background: var(--steel-lt); color: var(--navy); }
 }
 
 .win-b {
-  padding: 12px;
+  padding: clamp(9px, 2.4vw, 12px);
   background: #fbfbfb;
   border: 2px inset var(--steel-lt);
 }
@@ -281,8 +309,8 @@ th { background: var(--steel-lt); color: var(--navy); }
 .btn {
   display: inline-block;
   margin: 4px 6px 4px 0;
-  padding: 8px 16px;
-  font: bold 13px/1 Verdana, Geneva, sans-serif;
+  padding: 10px 16px;
+  font: bold clamp(12px, 2.8vw, 13px)/1 Verdana, Geneva, sans-serif;
   letter-spacing: 1px;
   color: #3a1a00 !important;
   text-decoration: none;
@@ -316,8 +344,8 @@ th { background: var(--steel-lt); color: var(--navy); }
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 10px 12px;
-  font: bold 13px/1.4 Verdana, Geneva, sans-serif;
+  padding: clamp(6px, 2vw, 10px) clamp(8px, 2.4vw, 12px);
+  font: bold clamp(11px, 2.8vw, 13px)/1.4 Verdana, Geneva, sans-serif;
   color: #fff;
   text-shadow: 1px 1px 0 #000;
   background: linear-gradient(180deg, transparent, rgba(10, 20, 35, .85));
@@ -327,13 +355,15 @@ th { background: var(--steel-lt); color: var(--navy); }
    Grids: news cards, gallery, videos
    -------------------------------------------------------------------------- */
 
+/* min() in the track size is what keeps this from overflowing: on a 320px
+   phone the track asks for 100% instead of 210px, so one card per row */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(min(210px, 100%), 1fr));
+  gap: clamp(8px, 2vw, 12px);
 }
 
-.grid.two { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+.grid.two { grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); }
 
 .thumb {
   display: block;
@@ -346,10 +376,13 @@ th { background: var(--steel-lt); color: var(--navy); }
 
 .thumb:hover { background: linear-gradient(180deg, var(--amber), var(--orange)); }
 
+/* aspect-ratio instead of a fixed pixel height - the card keeps its shape at
+   every column width, and every row of the grid stays aligned */
 .thumb img {
   display: block;
   width: 100%;
-  height: 130px;
+  height: auto;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   border: 1px solid var(--border-dk);
   background: #0d1622;
@@ -371,20 +404,25 @@ th { background: var(--steel-lt); color: var(--navy); }
 
 .thumb:hover .d { color: #4a2500; }
 
-/* play badge over video thumbs */
-.play { position: relative; }
+/* play badge over video thumbs.
+   The triangle is centred on .shot, the wrapper around the image, so it stays
+   put at any card width - it is not pinned to a pixel offset. */
+.shot {
+  position: relative;
+  display: block;
+}
 
-.play::after {
+.shot::after {
   content: "";
   position: absolute;
   left: 50%;
-  top: 70px;
+  top: 50%;
   width: 0;
   height: 0;
-  margin: -14px 0 0 -10px;
-  border-left: 22px solid var(--amber);
-  border-top: 14px solid transparent;
-  border-bottom: 14px solid transparent;
+  transform: translate(-45%, -50%);
+  border-left: clamp(16px, 5vw, 22px) solid var(--amber);
+  border-top: clamp(10px, 3.2vw, 14px) solid transparent;
+  border-bottom: clamp(10px, 3.2vw, 14px) solid transparent;
   filter: drop-shadow(1px 1px 0 #000);
 }
 
@@ -423,7 +461,7 @@ th { background: var(--steel-lt); color: var(--navy); }
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: clamp(8px, 3vw, 20px);
   background: rgba(9, 15, 24, .9);
 }
 
@@ -440,7 +478,9 @@ th { background: var(--steel-lt); color: var(--navy); }
 #lb img {
   display: block;
   max-width: 100%;
-  max-height: 74vh;
+  /* dvh, so an image is not cut off behind a phone browser's toolbars */
+  max-height: 70vh;
+  max-height: 70dvh;
   border: 1px solid var(--border-dk);
 }
 
@@ -499,14 +539,68 @@ th { background: var(--steel-lt); color: var(--navy); }
 }
 
 /* --------------------------------------------------------------------------
-   Small screens - the one concession to the present day
+   Breakpoints
+
+   Most of the scaling above is done with clamp() and auto-fit grids, so these
+   only handle the things that need a decision rather than an interpolation.
    -------------------------------------------------------------------------- */
 
-@media (max-width: 700px) {
-  body { padding: 8px 6px 24px; }
-  #banner .logo { font-size: 40px; }
-  #nav a { flex: 1 1 40%; }
-  #main { padding: 12px; }
-  .thumb img { height: 110px; }
-  .play::after { top: 60px; }
+/* Tablet and below: the drop shadow and the deep outer gutter stop earning
+   their space. */
+@media (max-width: 760px) {
+  body { padding-bottom: 24px; }
+
+  #wrap { box-shadow: 0 0 0 1px #0b1420, 3px 3px 0 rgba(0, 0, 0, .45); }
+
+  #banner::after { height: 24px; }
+}
+
+/* Phone: stack the call-to-action buttons full width so they are thumb-sized,
+   and let the news grid go to one column. */
+@media (max-width: 520px) {
+  #wrap { border-width: 2px; }
+
+  .btn {
+    display: block;
+    margin: 6px 0;
+    text-align: center;
+  }
+
+  .grid { grid-template-columns: 1fr; }
+
+  .thumb img { aspect-ratio: 2 / 1; }
+
+  #foot { padding: 10px 10px 14px; }
+
+  .badge { font-size: 9px; }
+}
+
+/* Very narrow: give the nav two even columns instead of cramped thirds. */
+@media (max-width: 380px) {
+  #nav { grid-template-columns: repeat(2, 1fr); }
+
+  #ticker { font-size: 10px; }
+}
+
+/* Wide screens: the page stays a fixed column, the way it was drawn. It does
+   not stretch to 2000px, because that was never the look. */
+@media (min-width: 1400px) {
+  body { padding-block: 32px 60px; }
+}
+
+/* Print: drop the chrome, keep the words. */
+@media print {
+  body { background: #fff; padding: 0; }
+
+  #wrap { width: 100%; border: 0; box-shadow: none; background: #fff; }
+
+  #nav, #ticker, #foot, #lb { display: none; }
+
+  #banner { background: #fff; border-bottom: 2px solid #000; }
+
+  #banner .logo { -webkit-text-fill-color: #000; color: #000; filter: none; }
+
+  .win, .win-b { border: 1px solid #000; background: #fff; }
+
+  .win-t { background: #fff; color: #000; text-shadow: none; border-bottom: 1px solid #000; }
 }
