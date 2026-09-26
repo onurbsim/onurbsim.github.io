@@ -47,8 +47,6 @@ could consume those same assets.
 I also explored building it on Unreal Engine or Unity, but came to the
 conclusion that implementing an engine of its own made more sense.
 
-So: a new engine, the old files.
-
 ## Status
 
 <div class="table-wrap">
@@ -72,9 +70,10 @@ So: a new engine, the old files.
 ## Built with
 
 - **C++**, CMake, Ninja
-- MSYS2 UCRT64 / GCC on Windows
-- Rendering on OpenGL, Vulkan and Direct3D 12
-- NVIDIA DLSS on Direct3D 12
+- GCC - through MSYS2 UCRT64 on Windows, natively on Linux
+- Runs on **Windows** and **Linux**, and possibly **macOS** as well
+- Rendering on OpenGL and Vulkan, plus Direct3D 12 on Windows
+- NVIDIA DLSS on Direct3D 12 (Windows)
 - VR through OpenXR - tested with a Meta Quest 3 over Virtual Desktop
 - Dear ImGui for tools and debug interfaces
 
@@ -109,6 +108,8 @@ onurb stands on these open-source projects. Thank you to everyone behind them.
 - [Noto fonts](https://fonts.google.com/noto) - interface text in many scripts
 
 ## Requirements
+
+Windows or Linux - and possibly macOS as well.
 
 A legal copy of each game whose world you want to drive: OMSI 2, Midtown
 Madness 2 or GTA: Vice City. onurb finds your installation automatically, or
