@@ -78,6 +78,36 @@ So: a new engine, the old files.
 - VR through OpenXR - tested with a Meta Quest 3 over Virtual Desktop
 - Dear ImGui for tools and debug interfaces
 
+### Third-party libraries
+
+onurb stands on these open-source projects. Thank you to everyone behind them.
+
+**Windows, graphics and VR**
+
+- [GLFW](https://www.glfw.org/) - windows, input and the OpenGL context
+- [glad](https://github.com/Dav1dde/glad) - OpenGL function loader
+- [Vulkan-Headers](https://github.com/KhronosGroup/Vulkan-Headers) - Vulkan API headers
+- [NVIDIA Streamline](https://github.com/NVIDIA-RTX/Streamline) - DLSS integration
+- [OpenXR SDK](https://github.com/KhronosGroup/OpenXR-SDK) - VR headers and loader
+- [glslang](https://github.com/KhronosGroup/glslang) - GLSL to SPIR-V shader compiler
+- [SPIRV-Cross](https://github.com/KhronosGroup/SPIRV-Cross) - SPIR-V to HLSL, for Direct3D 12
+- [GLM](https://github.com/g-truc/glm) - vector and matrix maths
+- [stb_image](https://github.com/nothings/stb) - image loading
+- [Dear ImGui](https://github.com/ocornut/imgui) - tools and debug interface
+
+**Simulation**
+
+- [Jolt Physics](https://github.com/jrouwe/JoltPhysics) - vehicle and terrain physics
+- [Clipper2](https://github.com/AngusJohnson/Clipper2) - polygon operations for the OpenStreetMap world
+- [miniaudio](https://miniaud.io/) - audio playback and mixing
+
+**Data, network and text**
+
+- [SQLite](https://sqlite.org/) - local database
+- [zlib](https://zlib.net/) - decompression of game archives
+- [libcurl](https://curl.se/libcurl/) - HTTPS requests (optional)
+- [Noto fonts](https://fonts.google.com/noto) - interface text in many scripts
+
 ## Requirements
 
 A legal copy of each game whose world you want to drive: OMSI 2, Midtown
