@@ -9,8 +9,7 @@ permalink: /videos/
   <div class="win-b">
 
     <p style="font-size:11px; color:#4d6076;">
-      Click a thumbnail to load the player. Nothing from YouTube is loaded
-      until you do.
+      Click a thumbnail to view the video.
     </p>
 
     <div class="grid two">
