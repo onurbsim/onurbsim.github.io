@@ -12,10 +12,10 @@ description: >-
   onurb is a simulator written in C++ as a personal project, with some (maybe)
   very specific requirements of mine. Its foundation and prime directive is
   to drive OMSI 2 vehicles in several worlds. It follows the behaviour of
-  OMSI 2 and loads its original maps, buses and objects as they are, and the
-  same engine also drives Midtown Madness 2 and GTA: Vice City worlds, plus
-  its own driveable maps generated from OpenStreetMap and open geospatial
-  data, starting with Rio de Janeiro.
+  OMSI 2 and loads its maps, buses and objects as they are - the defaults and
+  community-made mods alike - and the same engine also drives Midtown
+  Madness 2 and GTA: Vice City worlds, plus its own driveable maps generated
+  from OpenStreetMap and open geospatial data, starting with Rio de Janeiro.
 
 # --- Where the site lives -------------------------------------------------
 # Served from the repository `onurbsim.github.io` on the GitHub organisation

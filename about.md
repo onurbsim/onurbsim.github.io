@@ -10,9 +10,11 @@ permalink: /about/
 (maybe) very specific requirements of mine. Its foundation and prime directive
 is to **drive OMSI 2 vehicles in several worlds**.
 
-It follows OMSI 2's behaviour and loads the original content you already own -
-maps, buses, scenery objects, textures, scripts - without conversion, repacking
-or re-authoring. OMSI 2's own maps are the first of those worlds. The same
+It follows OMSI 2's behaviour and loads the content you already have - maps,
+buses, scenery objects, textures, scripts - without conversion, repacking or
+re-authoring. That means not only the default maps and vehicles that ship with
+OMSI 2, but also the add-ons and mods created by its community. OMSI 2's maps,
+default and community-made, are the first of those worlds. The same
 engine also loads and drives:
 
 - **Midtown Madness 2** cities

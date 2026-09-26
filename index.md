@@ -30,7 +30,8 @@ hero_caption: "Driving an OMSI 2 map in the onurb engine."
   <div class="win-b">
     <p>{{ site.description }}</p>
     <p>
-      It runs the buses, maps and scenery objects you already own. Nothing
+      It runs the buses, maps and scenery objects you already have - the
+      OMSI 2 defaults and the add-ons and mods made by its community. Nothing
       from OMSI 2, Midtown Madness 2 or Vice City is re-authored or bundled -
       onurb reads the original files from your own installation, and not a
       single line of any game's code is reused.
