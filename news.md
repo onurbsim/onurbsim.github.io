@@ -4,7 +4,7 @@ title: News
 permalink: /news/
 ---
 
-<div class="win">
+<div class="win news">
   <b class="win-t">NEWS ARCHIVE</b>
   <div class="win-b">
 

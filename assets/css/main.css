@@ -466,10 +466,17 @@ th { background: var(--steel-lt); color: var(--navy); }
 .newsitem:last-child { border-bottom: 0; }
 .newsitem h3 { margin: 0 0 4px; }
 
+/* News reads in Verdana throughout - headlines included, not Trebuchet.
+   .news wraps the archive and each post; .newsitem covers the home page's
+   Latest News box too. */
+.news h2,
+.news h3,
+.newsitem h3 { font-family: Verdana, Geneva, sans-serif; }
+
 .stamp {
   display: inline-block;
   padding: 1px 6px;
-  font: bold 10px/1.5 "Courier New", Courier, monospace;
+  font: bold 10px/1.5 Verdana, Geneva, sans-serif;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: #7a3b00;
