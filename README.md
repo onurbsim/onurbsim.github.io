@@ -118,7 +118,7 @@ bundle exec jekyll serve   # http://127.0.0.1:4000/
 ## Files
 
 ```
-_config.yml        site title, nav, tagline, ticker text, links
+_config.yml        site title, nav, tagline, links
 _data/             gallery.yml, videos.yml - the content you edit most
 _layouts/          default (frame), page, post
 _posts/            one markdown file per news item

@@ -33,9 +33,6 @@ release:
 # download button instead of the "coming" notice.
 download_url: ""
 
-# Scrolling ticker under the navigation bar. Keep it short.
-ticker: "*** WELCOME TO THE ONURB HOMEPAGE *** VERSION 0.1 COMING FALL 2026 *** NOW DRIVING MIDTOWN MADNESS 2 AND VICE CITY *** RIO DE JANEIRO FROM OPENSTREETMAP COMING SOON ***"
-
 # Visitor counter in the footer. Uses the free Abacus API
 # (https://jasoncameron.dev/abacus/) - no account, nothing to install.
 # The namespace must be unique to this site; your github.io domain is ideal.

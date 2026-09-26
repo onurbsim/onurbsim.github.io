@@ -176,33 +176,6 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   Ticker - the marquee, done in CSS so the markup stays valid
-   -------------------------------------------------------------------------- */
-
-#ticker {
-  overflow: hidden;
-  padding: 4px 0;
-  background: var(--navy);
-  border-bottom: 2px solid #000;
-  color: var(--amber);
-  font: bold 11px/1.4 "Courier New", Courier, monospace;
-  letter-spacing: 1px;
-  white-space: nowrap;
-}
-
-#ticker span {
-  display: inline-block;
-  padding-left: 100%;
-  animation: slide 28s linear infinite;
-}
-
-@keyframes slide { to { transform: translateX(-100%); } }
-
-@media (prefers-reduced-motion: reduce) {
-  #ticker span { animation: none; padding-left: 8px; }
-}
-
-/* --------------------------------------------------------------------------
    Content
    -------------------------------------------------------------------------- */
 
@@ -631,8 +604,6 @@ th { background: var(--steel-lt); color: var(--navy); }
 /* Very narrow: give the nav two even columns instead of cramped thirds. */
 @media (max-width: 380px) {
   #nav { grid-template-columns: repeat(2, 1fr); }
-
-  #ticker { font-size: 10px; }
 }
 
 /* Wide screens: the page stays a fixed column, the way it was drawn. It does
@@ -647,7 +618,7 @@ th { background: var(--steel-lt); color: var(--navy); }
 
   #wrap { width: 100%; border: 0; box-shadow: none; background: #fff; }
 
-  #nav, #ticker, #foot, #lb { display: none; }
+  #nav, #foot, #lb { display: none; }
 
   #banner { background: #fff; border-bottom: 2px solid #000; }
 
