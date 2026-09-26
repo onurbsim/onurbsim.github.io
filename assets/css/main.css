@@ -2,7 +2,8 @@
    onurb - 1990s fan-page stylesheet
    Palette borrowed from Midtown Madness 2: steel-blue chrome panels,
    highway-sign orange and amber, asphalt background.
-   One file. No frameworks. No web fonts. Edit the variables and stop.
+   One file. No frameworks. One web font - D-DIN, for the logo - served
+   from this site, not a font CDN. Edit the variables and stop.
    ========================================================================== */
 
 :root {
@@ -27,6 +28,19 @@
   --border-dk:  #3c5a7d;
 }
 
+/* D-DIN Bold: an open (SIL OFL) take on DIN 1451, the lettering on German
+   and European road signs. Self-hosted and used only for the logo.
+   The file is Datto's original, unmodified: "D-DIN" is a Reserved Font Name,
+   so a converted or subsetted copy would have to be renamed.
+   Licence: assets/fonts/OFL.txt */
+@font-face {
+  font-family: "D-DIN";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/D-DIN-Bold.otf") format("opentype");
+}
+
 /* --------------------------------------------------------------------------
    Page frame
 
@@ -38,9 +52,27 @@
 
 * { box-sizing: border-box; }
 
+/* The backdrop lives on <html>, not <body>, and <html> is at least as tall
+   as the window. The gradient then stretches over the whole page - however
+   long the page or tall the screen - instead of ending at the body's edge
+   and starting over. */
 html {
+  min-height: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  background-color: var(--asphalt);
+  /* "asphalt" texture - a 90s tiled backdrop, drawn in CSS so the page makes
+     zero extra network requests. The stripes repeat on purpose; the
+     gradient under them does not. */
+  background-image:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, .035) 0 2px,
+      transparent 2px 9px
+    ),
+    linear-gradient(180deg, #333842 0%, #23272e 100%);
+  background-repeat: repeat, no-repeat;
+  background-size: auto, 100% 100%;
 }
 
 body {
@@ -50,16 +82,6 @@ body {
   overflow-wrap: break-word;
   font: clamp(12.5px, 12px + .15vw, 13.5px)/1.6 Verdana, Geneva, "DejaVu Sans", sans-serif;
   color: var(--ink);
-  background-color: var(--asphalt);
-  /* tiled "asphalt" background - a real 90s tiled backdrop, drawn in CSS so
-     the page makes zero extra network requests */
-  background-image:
-    repeating-linear-gradient(
-      135deg,
-      rgba(255, 255, 255, .035) 0 2px,
-      transparent 2px 9px
-    ),
-    linear-gradient(180deg, #333842 0%, #23272e 100%);
 }
 
 #wrap {
@@ -83,31 +105,15 @@ body {
   overflow: hidden;
 }
 
-/* skyline silhouette, pure CSS, sits behind the logo */
-#banner::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 34px;
-  opacity: .35;
-  background:
-    repeating-linear-gradient(90deg,
-      var(--navy-lt) 0 14px, transparent 14px 22px,
-      var(--navy-lt) 22px 30px, transparent 30px 41px,
-      var(--navy-lt) 41px 63px, transparent 63px 70px);
-}
-
 #banner .logo {
   position: relative;
   z-index: 2;
   margin: 0;
-  font-family: Impact, Haettenschweiler, "Arial Black", sans-serif;
+  font-family: "D-DIN", "Arial Narrow", Arial, sans-serif;
+  font-weight: 700;
   font-size: clamp(38px, 9vw, 62px);
   line-height: .95;
   letter-spacing: clamp(1px, .3vw, 2px);
-  text-transform: uppercase;
   color: var(--amber);
   background: linear-gradient(180deg, #fff1b8 0%, var(--amber) 45%, var(--orange) 100%);
   -webkit-background-clip: text;
@@ -272,6 +278,38 @@ th, td {
 
 th { background: var(--steel-lt); color: var(--navy); }
 
+/* Status table: a Windows 95 progress bar - navy blocks in a sunken well.
+   <span class="meter"><span style="width: 70%"></span></span> */
+.status td:last-child { white-space: nowrap; width: 45%; }
+
+.meter {
+  display: inline-block;
+  vertical-align: middle;
+  width: calc(100% - 4.5em);
+  min-width: 80px;
+  height: 16px;
+  padding: 2px;
+  background: #fff;
+  border: 2px inset var(--steel-lt);
+}
+
+.meter > span {
+  display: block;
+  height: 100%;
+  background: repeating-linear-gradient(90deg,
+    var(--navy-lt) 0 8px, transparent 8px 10px);
+}
+
+.pct {
+  display: inline-block;
+  width: 3.5em;
+  margin-left: 6px;
+  text-align: right;
+  font: bold 12px/1 "Courier New", Courier, monospace;
+  color: var(--navy);
+  vertical-align: middle;
+}
+
 /* --------------------------------------------------------------------------
    .win - a Windows-95-style panel, the workhorse of this layout:
    <div class="win"><b class="win-t">TITLE</b><div class="win-b">body</div></div>
@@ -320,6 +358,10 @@ th { background: var(--steel-lt); color: var(--navy); }
 
 .btn:active { border-style: inset; }
 
+/* Not a link - a "coming soon" notice dressed as a button. */
+.btn.soon,
+.btn.soon:active { cursor: default; border-style: outset; }
+
 .btn.alt {
   color: #fff !important;
   background: linear-gradient(180deg, var(--steel-dk), var(--navy));
@@ -338,6 +380,18 @@ th { background: var(--steel-lt); color: var(--navy); }
 }
 
 .hero img { display: block; width: 100%; height: auto; }
+
+/* Stand-in for a missing picture: a plain colour block the shape a
+   screenshot would be. Used when no image is set, or the image fails to
+   load. No file is fetched for it. */
+.blank {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--steel-dk);
+}
+
+.thumb .blank { border: 1px solid var(--border-dk); }
 
 .hero .cap {
   position: absolute;
@@ -551,8 +605,6 @@ th { background: var(--steel-lt); color: var(--navy); }
   body { padding-bottom: 24px; }
 
   #wrap { box-shadow: 0 0 0 1px #0b1420, 3px 3px 0 rgba(0, 0, 0, .45); }
-
-  #banner::after { height: 24px; }
 }
 
 /* Phone: stack the call-to-action buttons full width so they are thumb-sized,
@@ -568,7 +620,8 @@ th { background: var(--steel-lt); color: var(--navy); }
 
   .grid { grid-template-columns: 1fr; }
 
-  .thumb img { aspect-ratio: 2 / 1; }
+  .thumb img,
+  .thumb .blank { aspect-ratio: 2 / 1; }
 
   #foot { padding: 10px 10px 14px; }
 
@@ -590,7 +643,7 @@ th { background: var(--steel-lt); color: var(--navy); }
 
 /* Print: drop the chrome, keep the words. */
 @media print {
-  body { background: #fff; padding: 0; }
+  html, body { background: #fff; padding: 0; }
 
   #wrap { width: 100%; border: 0; box-shadow: none; background: #fff; }
 

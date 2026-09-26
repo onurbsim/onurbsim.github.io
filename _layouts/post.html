@@ -5,7 +5,7 @@ layout: default
   <b class="win-t">NEWS</b>
   <div class="win-b">
 
-    <p><span class="stamp">{{ page.date | date: "%d %b %Y" }}</span></p>
+    <p><span class="stamp">{{ page.date | date: "%d %b %Y" }}</span> by {{ page.author | default: site.author }}</p>
     <h2>{{ page.title }}</h2>
 
     {%- if page.image %}

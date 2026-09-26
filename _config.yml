@@ -4,26 +4,45 @@
 # ---------------------------------------------------------------------------
 
 title:    "onurb"
-subtitle: "An open-source bus simulator engine"
-tagline:  "OMSI 2 compatible. Written from scratch in C++."
+subtitle: "A driving simulator built on OMSI 2"
+tagline:  "Drive OMSI 2 vehicles in various worlds."
 email:    ""
+author:   "Thiago"
 description: >-
-  onurb is a free, open-source reimplementation of the OMSI 2 bus simulator
-  engine, written in C++. It loads original OMSI 2 maps, buses and objects,
-  and also drives the Midtown Madness 2 world format through the same engine.
+  onurb is a simulator written in C++ as a personal project, with some (maybe)
+  very specific requirements of mine. Its foundation and prime directive is
+  to drive OMSI 2 vehicles in several worlds. It follows the behaviour of
+  OMSI 2 and loads its original maps, buses and objects as they are, and the
+  same engine also drives Midtown Madness 2 and GTA: Vice City worlds, plus
+  its own driveable maps generated from OpenStreetMap and open geospatial
+  data, starting with Rio de Janeiro.
 
-# --- CHANGE THESE TWO LINES ------------------------------------------------
-# url    = https://<your-github-username>.github.io
-# baseurl = /<repository-name>   (leave empty "" if repo is <username>.github.io)
-url:     "https://YOUR-USERNAME.github.io"
-baseurl: "/onurb-site"
+# --- Where the site lives -------------------------------------------------
+# Served from the repository `onurbsim.github.io` on the GitHub organisation
+# `onurbsim`, which GitHub publishes at the bare domain - so no baseurl.
+url:     "https://onurbsim.github.io"
+baseurl: ""
 # ---------------------------------------------------------------------------
 
-github_repo: "https://github.com/YOUR-USERNAME/onurb"
-download_url: "https://github.com/YOUR-USERNAME/onurb/releases/latest"
+# Next release, shown on the home page and the About page.
+release:
+  version: "0.1"
+  date:    "Fall 2026"
+
+# Leave empty until a build is out. Once set, the home page shows a
+# download button instead of the "coming" notice.
+download_url: ""
 
 # Scrolling ticker under the navigation bar. Keep it short.
-ticker: "*** WELCOME TO THE ONURB HOMEPAGE *** NEW BUILD AVAILABLE *** NOW DRIVING MIDTOWN MADNESS 2 MAPS *** SIGN THE GUESTBOOK ***"
+ticker: "*** WELCOME TO THE ONURB HOMEPAGE *** VERSION 0.1 COMING FALL 2026 *** NOW DRIVING MIDTOWN MADNESS 2 AND VICE CITY *** RIO DE JANEIRO FROM OPENSTREETMAP COMING SOON ***"
+
+# Visitor counter in the footer. Uses the free Abacus API
+# (https://jasoncameron.dev/abacus/) - no account, nothing to install.
+# The namespace must be unique to this site; your github.io domain is ideal.
+# Only the live site counts visits; `jekyll serve` just shows the number.
+counter:
+  namespace: "onurbsim.github.io"
+  key:       "visits"
 
 # Navigation buttons, in order.
 nav:

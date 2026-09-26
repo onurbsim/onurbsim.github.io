@@ -14,14 +14,19 @@ permalink: /gallery/
 
     <div class="grid">
       {%- for shot in site.data.gallery %}
+      {%- if shot.file %}
       <a class="thumb" href="{{ shot.file | relative_url }}"
          data-lb data-cap="{{ shot.caption | escape }}">
         <img src="{{ shot.thumb | default: shot.file | relative_url }}"
              alt="{{ shot.caption | escape }}" loading="lazy"
-             onerror="this.src='{{ '/assets/img/placeholder.svg' | relative_url }}'">
+             onerror="this.outerHTML='<span class=blank></span>'">
+      {%- else %}
+      <div class="thumb">
+        <span class="blank"></span>
+      {%- endif %}
         <span class="t">{{ shot.caption }}</span>
         {%- if shot.date %}<span class="d">{{ shot.date }}</span>{% endif %}
-      </a>
+      {%- if shot.file %}</a>{% else %}</div>{% endif %}
       {%- else %}
       <p>No screenshots yet.</p>
       {%- endfor %}

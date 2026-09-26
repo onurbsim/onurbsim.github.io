@@ -7,24 +7,17 @@
 #   3. Add three lines here. Newest first.
 #
 # If `thumb` is left out, the full-size file is used for the thumbnail too.
+# If `file` is left out, the card shows a plain colour block instead.
 # ---------------------------------------------------------------------------
 
-- file:    /assets/img/screens/sample-01.png
-  thumb:   /assets/img/thumbs/sample-01.png
-  caption: "Spandau terminus at dusk"
-  date:    "2026-09-10"
+- caption: "Spandau terminus at dusk"
+  date:   "2026-09-10"
 
-- file:    /assets/img/screens/sample-02.png
-  thumb:   /assets/img/thumbs/sample-02.png
-  caption: "MAN SD202 interior, night lighting"
-  date:    "2026-09-02"
+- caption: "MAN SD202 interior, night lighting"
+  date:   "2026-09-02"
 
-- file:    /assets/img/screens/sample-03.png
-  thumb:   /assets/img/thumbs/sample-03.png
-  caption: "Midtown Madness 2 - Chicago loop"
-  date:    "2026-08-21"
+- caption: "Midtown Madness 2 - Chicago loop"
+  date:   "2026-08-21"
 
-- file:    /assets/img/screens/sample-04.png
-  thumb:   /assets/img/thumbs/sample-04.png
-  caption: "Terrain and spline rendering"
-  date:    "2026-08-14"
+- caption: "Terrain and spline rendering"
+  date:   "2026-08-14"

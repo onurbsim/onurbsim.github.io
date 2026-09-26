@@ -1,0 +1,19 @@
+# Status table on the About page. `progress` is a percentage (0-100) and
+# drives the progress bar. Rows show in this order.
+
+- area:     "OMSI 2 map loading (tiles, terrain, splines)"
+  progress: 90
+- area:     "OMSI 2 scenery objects and textures"
+  progress: 90
+- area:     "OMSI 2 vehicle models and interiors"
+  progress: 90
+- area:     "OMSI 2 vehicle scripting / script VM"
+  progress: 90
+- area:     "Midtown Madness 2 world format"
+  progress: 70
+- area:     "GTA: Vice City world format"
+  progress: 70
+- area:     "OpenStreetMap maps - Rio de Janeiro pilot"
+  progress: 30
+- area:     "AI traffic and timetables"
+  progress: 50

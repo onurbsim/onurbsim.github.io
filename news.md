@@ -21,7 +21,7 @@ permalink: /news/
 
     <hr>
     <p style="font-size:11px;">
-      Subscribe with <a href="{{ '/feed.xml' | relative_url }}">RSS</a>.
+      Subscribe with <a href="{{ '/feed.xml' | relative_url }}">RSS</a> - the old-fashioned but standard way.
     </p>
 
   </div>

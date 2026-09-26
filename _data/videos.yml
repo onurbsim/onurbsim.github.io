@@ -5,13 +5,12 @@
 #   https://www.youtube.com/watch?v=dQw4w9WgXcQ   ->   dQw4w9WgXcQ
 #
 # The thumbnail comes from YouTube automatically. The player is only loaded
-# when a visitor clicks.
+# when a visitor clicks. Leave `youtube_id` out and the card shows a plain
+# colour block instead.
 # ---------------------------------------------------------------------------
 
-- youtube_id: "dQw4w9WgXcQ"
-  title: "First full route in the onurb engine"
+- title: "First full route in the onurb engine"
   date:  "2026-09-08"
 
-- youtube_id: "dQw4w9WgXcQ"
-  title: "Loading a Midtown Madness 2 city"
+- title: "Loading a Midtown Madness 2 city"
   date:  "2026-08-19"

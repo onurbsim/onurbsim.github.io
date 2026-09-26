@@ -2,20 +2,27 @@
 layout: default
 title: Home
 # The big picture at the top of the home page. Drop a file in
-# assets/img/screens/ and point hero_image at it.
-hero_image: /assets/img/screens/hero.png
+# assets/img/screens/ and point hero_image at it. Empty = a plain colour block.
+hero_image: 
 hero_caption: "Driving an OMSI 2 map in the onurb engine."
 ---
 
 <div class="hero">
+  {%- if page.hero_image %}
   <img src="{{ page.hero_image | relative_url }}" alt="onurb screenshot"
-       onerror="this.src='{{ '/assets/img/placeholder.svg' | relative_url }}'">
+       onerror="this.outerHTML='<span class=blank></span>'">
+  {%- else %}
+  <span class="blank"></span>
+  {%- endif %}
   <span class="cap">{{ page.hero_caption }}</span>
 </div>
 
 <p style="text-align:center; margin:16px 0 22px;">
-  <a class="btn" href="{{ site.download_url }}">DOWNLOAD LATEST BUILD</a>
-  <a class="btn alt" href="{{ site.github_repo }}">SOURCE CODE</a>
+  {%- if site.download_url != "" %}
+  <a class="btn" href="{{ site.download_url }}">DOWNLOAD VERSION {{ site.release.version }}</a>
+  {%- else %}
+  <span class="btn soon">VERSION {{ site.release.version }} - COMING {{ site.release.date | upcase }}</span>
+  {%- endif %}
 </p>
 
 <div class="win">
@@ -23,9 +30,18 @@ hero_caption: "Driving an OMSI 2 map in the onurb engine."
   <div class="win-b">
     <p>{{ site.description }}</p>
     <p>
-      It is free, it is open source, and it runs the buses, maps and scenery
-      objects you already own. Nothing is re-authored and nothing is bundled -
-      onurb reads the original files from your own installation.
+      It runs the buses, maps and scenery objects you already own. Nothing
+      from OMSI 2, Midtown Madness 2 or Vice City is re-authored or bundled -
+      onurb reads the original files from your own installation, and not a
+      single line of any game's code is reused.
+    </p>
+    <p>
+      The newest world is a driveable city built from OpenStreetMap and
+      other open geospatial data, with Rio de Janeiro as the pilot. You bring
+      the vehicle, from OMSI 2 or Midtown Madness 2.
+    </p>
+    <p>
+      Next on the list: Midtown Madness 1 and GTA: San Andreas.
     </p>
     <p><a href="{{ '/about/' | relative_url }}">Read the full story &raquo;</a></p>
   </div>
@@ -53,8 +69,12 @@ hero_caption: "Driving an OMSI 2 map in the onurb engine."
     <div class="grid">
       {%- for shot in site.data.gallery limit: 4 %}
       <a class="thumb" href="{{ '/gallery/' | relative_url }}">
+        {%- if shot.file %}
         <img src="{{ shot.thumb | default: shot.file | relative_url }}" alt="{{ shot.caption }}"
-             onerror="this.src='{{ '/assets/img/placeholder.svg' | relative_url }}'">
+             onerror="this.outerHTML='<span class=blank></span>'">
+        {%- else %}
+        <span class="blank"></span>
+        {%- endif %}
         <span class="t">{{ shot.caption }}</span>
       </a>
       {%- endfor %}
@@ -69,9 +89,13 @@ hero_caption: "Driving an OMSI 2 map in the onurb engine."
   <b class="win-t">LATEST VIDEO</b>
   <div class="win-b">
     <a class="thumb" href="{{ '/videos/' | relative_url }}">
+      {%- if vid.youtube_id %}
       <span class="shot">
         <img src="https://img.youtube.com/vi/{{ vid.youtube_id }}/hqdefault.jpg" alt="{{ vid.title }}">
       </span>
+      {%- else %}
+      <span class="blank"></span>
+      {%- endif %}
       <span class="t">{{ vid.title }}</span>
       <span class="d">{{ vid.date }}</span>
     </a>

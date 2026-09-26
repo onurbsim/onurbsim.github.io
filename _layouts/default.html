@@ -32,22 +32,24 @@
 
   <div id="foot">
     <p>
-      <a href="{{ site.github_repo }}">Source on GitHub</a> &middot;
       <a href="{{ '/feed.xml' | relative_url }}">RSS</a> &middot;
       <a href="{{ '/about/' | relative_url }}">About</a>
     </p>
-    <p>
+    {%- if site.counter.namespace %}
+    <p id="hits-box" hidden>
       You are visitor number<br>
-      <span class="counter" id="hits">000000</span>
+      <span class="counter" id="hits"
+            data-ns="{{ site.counter.namespace }}"
+            data-key="{{ site.counter.key | default: 'visits' }}"
+            data-count="{% if jekyll.environment == 'production' %}1{% else %}0{% endif %}">000000</span>
     </p>
+    {%- endif %}
     <p>
-      <span class="badge">BEST VIEWED AT 800x600</span>
-      <span class="badge">MADE ON A PC</span>
       <span class="badge">UNDER CONSTRUCTION</span>
     </p>
     <p>
-      &copy; {{ site.time | date: "%Y" }} the onurb project.
-      Not affiliated with M-R Software or Microsoft.
+      {{ site.author }}, {{ site.time | date: "%Y" }}.
+      Not affiliated with M-R Software, Microsoft or Rockstar Games.
     </p>
   </div>
 

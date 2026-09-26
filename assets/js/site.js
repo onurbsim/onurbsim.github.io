@@ -71,23 +71,47 @@
 
   /* ----------------------------------------------------------------------
      Visitor counter.
-     Cosmetic: it counts this browser's own visits, in localStorage. There is
-     no server here, so a real shared counter is not possible without an
-     external service - and that would be one more thing to maintain.
+     GitHub Pages has no server, so the count lives in the free Abacus API
+     (namespace and key come from _config.yml). A visit is counted once per
+     browser session; other page views in that session just read the number.
+     Local previews never count. If the API is down the counter stays hidden.
      ---------------------------------------------------------------------- */
 
   var hits = document.getElementById('hits');
 
-  if (hits) {
-    var n = 1;
+  if (hits && window.fetch) {
+    var api = 'https://abacus.jasoncameron.dev/';
+    var path = encodeURIComponent(hits.getAttribute('data-ns')) + '/' +
+               encodeURIComponent(hits.getAttribute('data-key'));
+    var seen = false;
 
     try {
-      n = (parseInt(localStorage.getItem('onurb-hits'), 10) || 0) + 1;
-      localStorage.setItem('onurb-hits', String(n));
+      seen = sessionStorage.getItem('onurb-counted') === '1';
     } catch (err) {
-      /* private window, blocked storage - just show 1 */
+      /* blocked storage - treat as a new session */
     }
 
-    hits.textContent = String(n + 1336).padStart(6, '0');
+    var count = hits.getAttribute('data-count') === '1' && !seen;
+
+    fetch(api + (count ? 'hit/' : 'get/') + path)
+      .then(function (res) {
+        /* 404 = no visits recorded yet, which is a fine answer */
+        if (res.status === 404) return { value: 0 };
+        if (!res.ok) throw new Error('counter ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        if (typeof data.value !== 'number') return;
+
+        if (count) {
+          try { sessionStorage.setItem('onurb-counted', '1'); } catch (err) {}
+        }
+
+        hits.textContent = String(data.value).padStart(6, '0');
+        document.getElementById('hits-box').hidden = false;
+      })
+      .catch(function () {
+        /* offline, blocked or rate-limited - leave the counter hidden */
+      });
   }
 }());
