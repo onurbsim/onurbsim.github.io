@@ -52,6 +52,10 @@ nav:
 # Blog/news permalinks
 permalink: /news/:year/:month/:day/:title/
 
+# Publish posts dated in the future straight away, with their own date.
+# Without this they stay hidden until a push after that date.
+future: true
+
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
