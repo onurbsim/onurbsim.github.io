@@ -1,0 +1,19 @@
+# ---------------------------------------------------------------------------
+# The worlds onurb drives, in the order their subsections appear in the
+# gallery. `id` is what a gallery entry's `world:` field points at, and also
+# the URL fragment, so /gallery/#mm2 opens that subsection directly.
+#
+# To add a world: add it here, then tag shots with its id in gallery.yml.
+# ---------------------------------------------------------------------------
+
+- id:    omsi
+  label: "OMSI 2"
+
+- id:    mm2
+  label: "MIDTOWN MADNESS 2"
+
+- id:    vicecity
+  label: "VICE CITY"
+
+- id:    osm
+  label: "OPENSTREETMAP"

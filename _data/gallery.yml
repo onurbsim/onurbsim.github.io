@@ -8,16 +8,23 @@
 #
 # If `thumb` is left out, the full-size file is used for the thumbnail too.
 # If `file` is left out, the card shows a plain colour block instead.
+#
+# `world` puts the shot in one of the gallery's subsections. Use an id from
+# _data/worlds.yml. A shot with no `world` only shows up under ALL.
 # ---------------------------------------------------------------------------
 
 - caption: "Spandau terminus at dusk"
+  world:  omsi
   date:   "2026-09-10"
 
 - caption: "MAN SD202 interior, night lighting"
+  world:  omsi
   date:   "2026-09-02"
 
 - caption: "Midtown Madness 2 - Chicago loop"
+  world:  mm2
   date:   "2026-08-21"
 
 - caption: "Terrain and spline rendering"
+  world:  osm
   date:   "2026-08-14"

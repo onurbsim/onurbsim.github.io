@@ -454,6 +454,62 @@ th { background: var(--steel-lt); color: var(--navy); }
 }
 
 /* --------------------------------------------------------------------------
+   Subsection tabs - one per world, above the gallery grid
+   -------------------------------------------------------------------------- */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0 0 12px;
+  padding: 5px;
+  background: linear-gradient(180deg, var(--steel-lt), var(--steel));
+  border: 2px inset #fff;
+}
+
+/* flex-grow, so the row always fills the width; wrap, so a long label drops
+   to the next line instead of squeezing the others */
+.tab {
+  flex: 1 1 auto;
+  padding: 8px 10px;
+  font: bold clamp(10px, 2.4vw, 11px)/1.2 Verdana, Geneva, sans-serif;
+  letter-spacing: 1px;
+  color: var(--navy);
+  cursor: pointer;
+  background: linear-gradient(180deg, #fdfdfd, var(--steel-lt));
+  border: 2px outset #fff;
+}
+
+.tab:hover {
+  color: #3a1a00;
+  background: linear-gradient(180deg, var(--amber), var(--orange));
+}
+
+.tab.on {
+  color: #3a1a00;
+  background: linear-gradient(180deg, var(--amber), var(--orange));
+  border-style: inset;
+}
+
+.tab .n {
+  font: 10px/1 "Courier New", Courier, monospace;
+  letter-spacing: 0;
+}
+
+/* .thumb sets display: block, which would otherwise win over [hidden] */
+.thumb[hidden] { display: none; }
+
+.g-empty {
+  margin: 0;
+  padding: 18px 10px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: #f2f5f9;
+  border: 2px inset var(--steel-lt);
+}
+
+/* --------------------------------------------------------------------------
    News list
    -------------------------------------------------------------------------- */
 

@@ -47,6 +47,64 @@
   }
 
   /* ----------------------------------------------------------------------
+     Gallery subsections
+     One tab per world. The tabs are hidden in the markup and revealed here,
+     so a visitor without JavaScript gets the whole gallery in one list
+     instead of a row of buttons that do nothing. The choice is mirrored in
+     the URL fragment, so /gallery/#mm2 opens that world's shots.
+     ---------------------------------------------------------------------- */
+
+  var gTabs = document.getElementById('g-tabs');
+  var gGrid = document.getElementById('g-grid');
+
+  if (gTabs && gGrid) {
+    var gEmpty = document.getElementById('g-empty');
+    var cards = gGrid.querySelectorAll('[data-world]');
+    var btns = gTabs.querySelectorAll('[data-filter]');
+
+    var pick = function (which) {
+      var shown = 0;
+      var i;
+
+      for (i = 0; i < cards.length; i++) {
+        var on = which === 'all' || cards[i].getAttribute('data-world') === which;
+        cards[i].hidden = !on;
+        if (on) shown++;
+      }
+
+      for (i = 0; i < btns.length; i++) {
+        var sel = btns[i].getAttribute('data-filter') === which;
+        btns[i].classList.toggle('on', sel);
+        btns[i].setAttribute('aria-selected', sel ? 'true' : 'false');
+      }
+
+      if (gEmpty) gEmpty.hidden = shown > 0;
+    };
+
+    gTabs.hidden = false;
+
+    gTabs.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-filter]');
+      if (!btn) return;
+
+      var which = btn.getAttribute('data-filter');
+      pick(which);
+
+      if (history.replaceState) {
+        history.replaceState(null, '',
+          which === 'all' ? location.pathname : '#' + which);
+      }
+    });
+
+    /* open on the world named in the fragment, if it is one of ours */
+    var want = (location.hash || '').replace('#', '');
+    var known = /^[a-z0-9-]+$/.test(want) &&
+                gTabs.querySelector('[data-filter="' + want + '"]');
+
+    pick(known ? want : 'all');
+  }
+
+  /* ----------------------------------------------------------------------
      Video thumbnails: swap in the YouTube player on click, so no YouTube
      request is made until a visitor actually asks for one.
      ---------------------------------------------------------------------- */
