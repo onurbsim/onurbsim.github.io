@@ -283,6 +283,66 @@ th { background: var(--steel-lt); color: var(--navy); }
   vertical-align: middle;
 }
 
+/* Requirements page: a spec sheet off the back of a 1990s game box.
+   .spec  - row labels down the left, one column per tier
+   .bench - plain measurement tables
+   .note  - a small sticky-note aside under a table
+   .extras - the optional-hardware list */
+.spec th:first-child { width: 7.5em; }
+
+.spec tr:first-child th { vertical-align: bottom; }
+
+.spec th + th {
+  font-size: 13px;
+  color: #fff;
+  text-shadow: 1px 1px 0 var(--navy);
+  background: linear-gradient(180deg, var(--steel-dk), var(--navy-lt));
+}
+
+.spec th + th:last-child {
+  color: #3a1a00;
+  text-shadow: none;
+  background: linear-gradient(180deg, var(--amber), var(--orange));
+}
+
+.spec .tier {
+  display: block;
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: normal;
+  line-height: 1.35;
+}
+
+.spec td { vertical-align: top; width: 42%; }
+
+.spec tr:nth-child(odd) td,
+.bench tr:nth-child(odd) td { background: #f2f5f9; }
+
+.bench td + td { font-family: "Courier New", Courier, monospace; white-space: nowrap; }
+
+.note {
+  margin: 10px 0 16px;
+  padding: 7px 10px;
+  font-size: 11.5px;
+  background: #fff8e8;
+  border: 1px dashed var(--orange);
+}
+
+.extras { margin: 10px 0; }
+
+.extras dt {
+  margin-top: 10px;
+  padding: 3px 8px;
+  font-weight: bold;
+  color: var(--navy);
+  background: linear-gradient(90deg, var(--steel-lt), transparent);
+  border-left: 4px solid var(--orange);
+}
+
+.extras dd { margin: 4px 0 0 12px; }
+
+h2 .stamp { vertical-align: middle; margin-left: 6px; }
+
 /* --------------------------------------------------------------------------
    .win - a Windows-95-style panel, the workhorse of this layout:
    <div class="win"><b class="win-t">TITLE</b><div class="win-b">body</div></div>

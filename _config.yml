@@ -45,6 +45,7 @@ counter:
 nav:
   - { title: "Home",    url: "/" }
   - { title: "About",   url: "/about/" }
+  - { title: "Specs",   url: "/requirements/" }
   - { title: "News",    url: "/news/" }
   - { title: "Gallery", url: "/gallery/" }
   - { title: "Videos",  url: "/videos/" }

@@ -75,7 +75,7 @@ conclusion that implementing an engine of its own made more sense.
 - GCC - through MSYS2 UCRT64 on Windows, natively on Linux
 - Runs on **Windows** and **Linux**, and possibly **macOS** as well
 - Rendering on OpenGL and Vulkan, plus Direct3D 12 on Windows
-- NVIDIA DLSS on Direct3D 12 (Windows)
+- NVIDIA DLSS on Direct3D 12 and Vulkan (Windows)
 - VR through OpenXR - tested with a Meta Quest 3 over Virtual Desktop
 - Dear ImGui for tools and debug interfaces
 
@@ -111,7 +111,11 @@ onurb stands on these open-source projects. Thank you to everyone behind them.
 
 ## Requirements
 
-Windows or Linux - and possibly macOS as well.
+Windows 10 or 11, 64-bit, with a processor that supports AVX2 and a graphics
+card with OpenGL 4.6 - roughly anything from 2016 onward. Linux and macOS
+builds are experimental. Minimum and recommended specifications, with figures
+measured on the test machine, are on the
+<a href="{{ '/requirements/' | relative_url }}">requirements page</a>.
 
 A legal copy of each game whose world you want to drive: OMSI 2, Midtown
 Madness 2 or GTA: Vice City. onurb finds your installation automatically, or
