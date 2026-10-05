@@ -9,11 +9,13 @@
   progress: 90
 - area:     "OMSI 2 vehicle scripting / script VM"
   progress: 90
+- area:     "Proton Bus Simulator buses"
+  progress: 50
 - area:     "Midtown Madness 2 world format"
   progress: 70
 - area:     "GTA: Vice City world format"
   progress: 70
 - area:     "OpenStreetMap maps - Rio de Janeiro pilot"
-  progress: 30
-- area:     "AI traffic and timetables"
   progress: 50
+- area:     "AI traffic and timetables"
+  progress: 75
