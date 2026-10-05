@@ -5,7 +5,7 @@ permalink: /news/
 ---
 
 <div class="win news">
-  <b class="win-t">NEWS ARCHIVE</b>
+  <b class="win-t">News archive</b>
   <div class="win-b">
 
     {%- for post in site.posts %}

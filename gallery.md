@@ -5,7 +5,7 @@ permalink: /gallery/
 ---
 
 <div class="win">
-  <b class="win-t">SCREENSHOT GALLERY</b>
+  <b class="win-t">Screenshot gallery</b>
   <div class="win-b">
 
     <p style="font-size:11px; color:#4d6076;">
@@ -18,7 +18,7 @@ permalink: /gallery/
     {%- endcomment -%}
     <div class="tabs" id="g-tabs" role="tablist" aria-label="Worlds" hidden>
       <button type="button" class="tab on" role="tab" aria-selected="true"
-              data-filter="all">ALL <span class="n">({{ site.data.gallery | size }})</span></button>
+              data-filter="all">All <span class="n">({{ site.data.gallery | size }})</span></button>
       {%- for world in site.data.worlds %}
       {%- assign n = site.data.gallery | where: "world", world.id | size %}
       <button type="button" class="tab" role="tab" aria-selected="false"

@@ -5,7 +5,7 @@ permalink: /videos/
 ---
 
 <div class="win">
-  <b class="win-t">VIDEOS</b>
+  <b class="win-t">Videos</b>
   <div class="win-b">
 
     <p style="font-size:11px; color:#4d6076;">

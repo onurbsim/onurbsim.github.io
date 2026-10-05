@@ -8,7 +8,7 @@ permalink: /about/
 
 **onurb** is a simulator written in C++ as a personal project, with some
 (maybe) very specific requirements of mine. Its foundation and prime directive
-is to **drive OMSI 2 vehicles in several worlds**.
+is to **drive OMSI 2 vehicles in several worlds**. This project started approximately 7 years ago and had its ups and downs, with different approaches tried throughout this time.
 
 It follows OMSI 2's behaviour and loads the content you already have - maps,
 buses, scenery objects, textures, scripts - without conversion, repacking or
@@ -20,10 +20,10 @@ engine also loads and drives:
 - **Midtown Madness 2** cities
 - **GTA: Vice City**
 - **Its own maps**, generated from OpenStreetMap and other open-source
-  geospatial data. **Rio de Janeiro** is the pilot city.
+  geospatial data. **Rio de Janeiro** is the pilot municipality, also including some further distant areas of the state of Rio.
+- **Proton Bus Simulator** buses (encrypted models will not load to respect intellectual property of their respective authors).
 
-Support for **Midtown Madness 1** and **GTA: San Andreas** is expected in the
-future.
+Support for **Midtown Madness 1** and **GTA: San Andreas** is in ongoing development, but not ready for production.
 
 **onurb does not reuse a single line of code from any of these games.** It is
 written from scratch; what it shares with them is their file formats and
@@ -31,6 +31,8 @@ behaviour, not their code.
 
 Nothing from any of the games ships with onurb either. The engine points at
 your own installation and reads it in place.
+
+I recently came to know that there are some very interesting projects that also recreated OMSI 2 environment, also featuring multiplayer features and improved graphics. For now, multiplayer is not on the roadmap. Also I'm not a graphics rendering expert, so you might feel that the graphics of onurb feels like old-style OMSI.
 
 ## Why
 
@@ -133,8 +135,7 @@ contributors</a>, available under the Open Database License (ODbL).
 
 ## About the author
 
-I'm **{{ site.author }}**, and onurb is my project. It is not my first time
-inside OMSI:
+I'm **{{ site.author }}** and I've worked in some OMSI projects in the past:
 
 - Developer of **OMSI Map Tools**
 - Author of the **Tropical City** map
@@ -147,5 +148,4 @@ Version {{ site.release.version }} is planned for **{{ site.release.date }}**.
 Follow the <a href="{{ '/news/' | relative_url }}">news page</a> for updates.
 
 onurb is, first of all, a very personal project, and its source code is not
-public. Opening it up is the intention for the future, but it is not
-guaranteed and there is no date for it.
+public for now, since I'm still working on some specific aspects.

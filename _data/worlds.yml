@@ -10,10 +10,10 @@
   label: "OMSI 2"
 
 - id:    mm2
-  label: "MIDTOWN MADNESS 2"
+  label: "Midtown Madness 2"
 
 - id:    vicecity
-  label: "VICE CITY"
+  label: "Vice City"
 
 - id:    osm
-  label: "OPENSTREETMAP"
+  label: "OpenStreetMap"

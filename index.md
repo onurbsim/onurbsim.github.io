@@ -19,14 +19,14 @@ hero_caption: "Driving an OMSI 2 map in the onurb engine."
 
 <p style="text-align:center; margin:16px 0 22px;">
   {%- if site.download_url != "" %}
-  <a class="btn" href="{{ site.download_url }}">DOWNLOAD VERSION {{ site.release.version }}</a>
+  <a class="btn" href="{{ site.download_url }}">Download version {{ site.release.version }}</a>
   {%- else %}
-  <span class="btn soon">VERSION {{ site.release.version }} - COMING {{ site.release.date | upcase }}</span>
+  <span class="btn soon">Version {{ site.release.version }} - coming {{ site.release.date }}</span>
   {%- endif %}
 </p>
 
 <div class="win">
-  <b class="win-t">WHAT IS ONURB?</b>
+  <b class="win-t">What is onurb?</b>
   <div class="win-b">
     <p>{{ site.description }}</p>
     <p>
@@ -49,7 +49,7 @@ hero_caption: "Driving an OMSI 2 map in the onurb engine."
 </div>
 
 <div class="win">
-  <b class="win-t">LATEST NEWS</b>
+  <b class="win-t">Latest news</b>
   <div class="win-b">
     {%- for post in site.posts limit: 3 %}
     <div class="newsitem">
@@ -65,7 +65,7 @@ hero_caption: "Driving an OMSI 2 map in the onurb engine."
 </div>
 
 <div class="win">
-  <b class="win-t">SCREENSHOTS</b>
+  <b class="win-t">Screenshots</b>
   <div class="win-b">
     <div class="grid">
       {%- for shot in site.data.gallery limit: 4 %}
@@ -87,7 +87,7 @@ hero_caption: "Driving an OMSI 2 map in the onurb engine."
 {%- assign vid = site.data.videos | first %}
 {%- if vid %}
 <div class="win">
-  <b class="win-t">LATEST VIDEO</b>
+  <b class="win-t">Latest video</b>
   <div class="win-b">
     <a class="thumb" href="{{ '/videos/' | relative_url }}">
       {%- if vid.youtube_id %}

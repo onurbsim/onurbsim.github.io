@@ -50,8 +50,16 @@ It appears on `/news/` and as the top card on the home page automatically.
 - file:    /assets/img/screens/my-shot.png
   thumb:   /assets/img/thumbs/my-shot.png
   caption: "What it shows"
+  world:   omsi
   date:    "2026-10-01"
 ```
+
+`world` files the shot under one of the gallery's subsection tabs. The ids
+live in `_data/worlds.yml` - `omsi`, `mm2`, `vicecity`, `osm` - and that file
+is also where you add a new world or change the order of the tabs. A shot with
+no `world` only shows up under "All". The tabs are revealed by `site.js`, so
+with JavaScript off the gallery is simply one list of every shot. Each one has
+its own address too: `/gallery/#mm2` opens that world.
 
 Leave `file` out and the card shows a plain colour block instead of a
 picture; the same block appears if an image path is wrong. The layout never
@@ -85,6 +93,7 @@ The reusable pieces:
 | `.btn` / `.btn.alt` | Beveled orange / navy button |
 | `.grid` / `.grid.two` | Responsive card grid, one column on a phone |
 | `.thumb` | Gallery or video card |
+| `.tabs` + `.tab` | Row of subsection tabs above the gallery grid |
 | `.shot` | Wrapper that puts a play triangle over a thumbnail |
 | `.hero` | Full-width image with caption overlay |
 | `.stamp` | Small amber date tag |
@@ -120,10 +129,11 @@ bundle exec jekyll serve   # http://127.0.0.1:4000/
 ```
 _config.yml        site title, nav, tagline, links
 _data/             gallery.yml, videos.yml - the content you edit most
+                   worlds.yml - the gallery's subsection tabs
 _layouts/          default (frame), page, post
 _posts/            one markdown file per news item
 assets/css/        main.css - the whole design
-assets/js/         site.js - lightbox, video embeds, visitor counter (Abacus API)
+assets/js/         site.js - lightbox, gallery tabs, video embeds, visitor counter
 assets/img/        screens/, thumbs/, favicon.svg
 index.md           home page
 about.md news.md gallery.md videos.md

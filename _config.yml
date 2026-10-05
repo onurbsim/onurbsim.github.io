@@ -43,11 +43,11 @@ counter:
 
 # Navigation buttons, in order.
 nav:
-  - { title: "HOME",    url: "/" }
-  - { title: "ABOUT",   url: "/about/" }
-  - { title: "NEWS",    url: "/news/" }
-  - { title: "GALLERY", url: "/gallery/" }
-  - { title: "VIDEOS",  url: "/videos/" }
+  - { title: "Home",    url: "/" }
+  - { title: "About",   url: "/about/" }
+  - { title: "News",    url: "/news/" }
+  - { title: "Gallery", url: "/gallery/" }
+  - { title: "Videos",  url: "/videos/" }
 
 # Blog/news permalinks
 permalink: /news/:year/:month/:day/:title/
