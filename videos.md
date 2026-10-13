@@ -8,7 +8,7 @@ permalink: /videos/
   <b class="win-t">Videos</b>
   <div class="win-b">
 
-    <p style="font-size:11px; color:#4d6076;">
+    <p style="font-size:11px; color:var(--ice);">
       Click a thumbnail to view the video.
     </p>
 

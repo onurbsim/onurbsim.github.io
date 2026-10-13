@@ -4,6 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {%- seo -%}
+  <meta name="theme-color" content="#060a3a">
+  <meta name="color-scheme" content="dark">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap">
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   <link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
   {%- feed_meta -%}
@@ -13,6 +18,7 @@
 <div id="wrap">
 
   <div id="banner">
+    <canvas class="lights" aria-hidden="true"></canvas>
     <p class="logo"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></p>
     <p class="sub">{{ site.tagline }}</p>
   </div>

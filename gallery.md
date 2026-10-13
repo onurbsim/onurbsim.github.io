@@ -8,7 +8,7 @@ permalink: /gallery/
   <b class="win-t">Screenshot gallery</b>
   <div class="win-b">
 
-    <p style="font-size:11px; color:#4d6076;">
+    <p style="font-size:11px; color:var(--ice);">
       Click a shot to view it full size.
     </p>
 

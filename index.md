@@ -42,7 +42,14 @@ hero_caption: "Driving an OMSI 2 map in the onurb engine."
       the vehicle, from OMSI 2 or Midtown Madness 2.
     </p>
     <p>
-      Next on the list: Midtown Madness 1 and GTA: San Andreas.
+      Other worlds such as Midtown Madness 1, GTA: San Andreas, and WatchDogs 2 will follow in the long run.
+    </p>
+    <p>
+      The source code will be released soon.
+    </p>
+    <p>
+      Multiplayer is not a feature of the early iterations - I'm still
+      concerned about the security aspects of it.
     </p>
     <p><a href="{{ '/about/' | relative_url }}">Read the full story &raquo;</a></p>
   </div>

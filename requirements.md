@@ -121,18 +121,19 @@ at **2560&times;1440**.
   </dd>
 </dl>
 
-## Linux and macOS <span class="stamp">experimental</span>
+## macOS and Linux
 
 <ul>
-  <li><b>Linux, x86_64:</b> a processor with AVX2, and OpenGL 4.6 (Mesa
-      radeonsi or iris, or the NVIDIA driver) or Vulkan. Built on Ubuntu 24.04.
-      Needs libcurl, zlib and, for Vulkan, libvulkan1.</li>
   <li><b>macOS:</b> Apple Silicon only, running on Vulkan through MoltenVK.
-      macOS stops at OpenGL 4.1, which is too old for onurb.</li>
+      macOS stops at OpenGL 4.1, which is too old for onurb. Working on a real
+      Apple M1 Pro.</li>
+  <li><b>Linux, x86_64</b> <span class="stamp">experimental</span>: a
+      processor with AVX2, and OpenGL 4.6 (Mesa radeonsi or iris, or the
+      NVIDIA driver) or Vulkan. Built on Ubuntu 24.04. Needs libcurl, zlib
+      and, for Vulkan, libvulkan1.</li>
 </ul>
 
 <p class="note">
-  Both builds compile and pass the automated tests. The macOS build has run on
-  a real Apple M1 Pro and draws the world's terrain. Neither build has driven
-  a real OMSI 2 map yet. Reports are welcome.
+  The Linux build compiles and passes the automated tests, but has not driven
+  a real OMSI 2 map yet.
 </p>

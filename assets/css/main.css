@@ -1,232 +1,412 @@
 /* ==========================================================================
-   onurb - 1990s fan-page stylesheet
-   Palette borrowed from Midtown Madness 2: steel-blue chrome panels,
-   highway-sign orange and amber, asphalt background.
-   One file. No frameworks. One web font - D-DIN, for the logo - served
-   from this site, not a font CDN. Edit the variables and stop.
+   onurb - stylesheet
+   The look of the program's own "Midtown" interface (the default in-game
+   style, inspired by Midtown Madness 2's front end): night blue with a cyan
+   grid, glowing double frames, royal-blue buttons, orange for what is
+   selected or next, yellow for values and links, and an abstract city
+   sunset down the right of the banner.
+
+   The palette, the frame and glow widths, the radii and the arrow and
+   progress-bar shapes are taken from the program's source
+   (src/core/ui_mm2.{h,cpp}, assets/shaders/ui_backdrop.frag), so the site and
+   the interface read as one thing.
+
+   Faces: Farringdon Bold (SIL OFL 1.1, served from this site) for the logo
+   and the big titles ONLY - it is heavy and small-eyed as running text and
+   has no "+" (a missing glyph falls back to Noto Sans). Noto Sans (Google
+   Fonts, linked in _layouts/default.html) for everything that is read.
+   One file, no frameworks. Edit the variables and stop.
    ========================================================================== */
 
 :root {
-  /* --- Midtown Madness 2 colours ---------------------------------------- */
-  --sky:        #6ea8dc;   /* daytime sky blue                              */
-  --sky-lt:     #a9cdf0;   /* hazy horizon                                  */
-  --steel:      #8fa9c4;   /* menu panel metal                              */
-  --steel-lt:   #c3d4e5;   /* panel highlight edge                          */
-  --steel-dk:   #5b7897;   /* panel shadow edge                             */
-  --navy:       #142a44;   /* deep body text / window title bar             */
-  --navy-lt:    #27486f;
-  --orange:     #ff7a18;   /* MM2 logo orange - buttons, rules, accents     */
-  --amber:      #ffc229;   /* MM2 logo highlight - hover, badges            */
-  --cream:      #f3ead8;   /* aged paper content background                 */
-  --asphalt:    #2b2f36;   /* road surface - page background                */
+  /* --- the Midtown palette (mm2ui::k* in src/core/ui_mm2.h) -------------- */
+  --night:      #060a3a;   /* kNight    - window ground, backdrop            */
+  --navy:       #0c1670;   /* kNavy     - fields, panels, inactive titles    */
+  --royal:      #1b2fd0;   /* kRoyal    - buttons, headers, active title bar */
+  --royal-hi:   #2f4cff;   /* kRoyalHi  - hover, the inner frame rule        */
+  --cyan:       #3cc8ff;   /* kCyan     - frames, glow, the grid, labels     */
+  --ice:        #a8e8ff;   /* kIce      - secondary text                     */
+  --orange:     #ff6a00;   /* kOrange   - pressed, selected, the step forward*/
+  --orange-hi:  #ff9a1f;   /* kOrangeHi                                       */
+  --yellow:     #ffd400;   /* kYellow   - values, check marks, links         */
+  --text:       #f4f8ff;   /* kText                                           */
 
-  /* --- roles ------------------------------------------------------------ */
-  --ink:        #16202c;
-  --ink-soft:   #4d6076;
-  --link:       #0b39a8;
-  --link-vis:   #6a2296;
-  --border-dk:  #3c5a7d;
+  /* --- the few literal colours ui_mm2.cpp draws with -------------------- */
+  --text-dim:   #8caae1;   /* ImGuiCol_TextDisabled                          */
+  --field:      #0a1f47;   /* spinner_field's well                           */
+  --plate:      rgb(4 8 28 / .96);   /* MM2's black plate                    */
+  --pressed:    #c85000;   /* a primary arrow held down                      */
+  --peach:      #ffdc96;   /* a primary arrow's outline                      */
+  --track:      #06123a;   /* a bar's empty track                            */
+  --track-line: #2a6bb0;
+
+  /* --- the sunset (sunset() in ui_mm2.cpp and ui_backdrop.frag) ---------- */
+  --sunset: linear-gradient(180deg,
+      #2a0a4a 0%,          /* plum                                         */
+      #7a1550 30%,         /* magenta                                      */
+      #d6341e 55%,         /* ember                                        */
+      #ff6a00 76%,         /* orange                                       */
+      #ffa846 90%,         /* amber                                        */
+      #ffcd78 100%);       /* the horizon's last light                     */
+
+  /* --- shapes ----------------------------------------------------------- */
+  --grid-line:  rgb(60 200 255 / .078);  /* window_grid(): cyan at 20/255   */
+  --grid-panel: rgb(60 200 255 / .094);  /* begin_panel(): cyan at 24/255   */
+  --cell:       22px;                    /* 1.1 x the interface's text size */
+  --r-win:      10px;                    /* WindowRounding                  */
+  --r-frame:    6px;                     /* FrameRounding                   */
+  /* The glow round every window: three 3 px rules at 2.5, 5 and 7.5 px out,
+     fainter outwards (chrome_hook in ui_mm2.cpp). */
+  --glow:
+    0 0 0 4px   rgb(60 200 255 / .19),
+    0 0 0 6.5px rgb(60 200 255 / .125),
+    0 0 0 9px   rgb(60 200 255 / .063);
+  --glow-hot:
+    0 0 0 4px   rgb(255 212 0 / .30),
+    0 0 0 6.5px rgb(255 212 0 / .16),
+    0 0 0 9px   rgb(255 212 0 / .07);
+
+  /* --- faces ------------------------------------------------------------ */
+  --face:  "Noto Sans", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --title: "Farringdon", var(--face);
+  --mono:  ui-monospace, "Cascadia Mono", Consolas, "DejaVu Sans Mono", monospace;
+
+  /* --- cursors (assets/img/cursors - the program's own, drawn by
+         tools/make_mm2_cursors.py; hotspots from its hotspots.txt) -------- */
+  --cur-arrow: url("../img/cursors/cursor_arrow_32.png") 2 2, auto;
+  --cur-hand:  url("../img/cursors/cursor_hand_32.png") 10 2, pointer;
+  --cur-text:  url("../img/cursors/cursor_text_32.png") 16 16, text;
+
+  color-scheme: dark;
 }
 
-/* D-DIN Bold: an open (SIL OFL) take on DIN 1451, the lettering on German
-   and European road signs. Self-hosted and used only for the logo.
-   The file is Datto's original, unmodified: "D-DIN" is a Reserved Font Name,
-   so a converted or subsetted copy would have to be renamed.
-   Licence: assets/fonts/OFL.txt */
+/* Farringdon Bold: a free revival of Edward Johnston's London Underground
+   lettering - the program's title face. The upstream file, unmodified.
+   Latin only and no "+": a character it lacks is drawn in Noto Sans.
+   Licence: assets/fonts/OFL-Farringdon.txt */
 @font-face {
-  font-family: "D-DIN";
+  font-family: "Farringdon";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("../fonts/D-DIN-Bold.otf") format("opentype");
+  src: url("../fonts/Farringdon-Bold.otf") format("opentype");
 }
 
 /* --------------------------------------------------------------------------
    Page frame
 
-   The 1990s part is the look, not the fixed 820px table. The shell below is
-   fluid: one max width, side gutters that never collapse, and type that
-   scales with the viewport. Nothing here has a min-width wider than a phone,
-   so the page never scrolls sideways.
+   The page is one window on the backdrop, the way the program's screens sit
+   on theirs. The shell is fluid: one max width, side gutters that never
+   collapse, type that scales with the viewport, and nothing with a
+   min-width wider than a phone, so the page never scrolls sideways.
    -------------------------------------------------------------------------- */
 
 * { box-sizing: border-box; }
 
-/* The backdrop lives on <html>, not <body>, and <html> is at least as tall
-   as the window. The gradient then stretches over the whole page - however
-   long the page or tall the screen - instead of ending at the body's edge
-   and starting over. */
+/* The backdrop: night blue ruled with the cyan grid. It lives on <html>,
+   which is at least as tall as the window, so it covers any page length. */
 html {
   min-height: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  background-color: var(--asphalt);
-  /* "asphalt" texture - a 90s tiled backdrop, drawn in CSS so the page makes
-     zero extra network requests. The stripes repeat on purpose; the
-     gradient under them does not. */
+  cursor: var(--cur-arrow);
+  background-color: var(--night);
   background-image:
-    repeating-linear-gradient(
-      135deg,
-      rgba(255, 255, 255, .035) 0 2px,
-      transparent 2px 9px
-    ),
-    linear-gradient(180deg, #333842 0%, #23272e 100%);
-  background-repeat: repeat, no-repeat;
-  background-size: auto, 100% 100%;
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(180deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  scrollbar-color: var(--royal) var(--night);
 }
 
 body {
   margin: 0;
-  padding-block: clamp(8px, 2vw, 18px) 40px;
-  padding-inline: clamp(6px, 2vw, 12px);
+  padding-block: clamp(14px, 3vw, 28px) 40px;
+  padding-inline: clamp(12px, 3vw, 20px);
   overflow-wrap: break-word;
-  font: clamp(12.5px, 12px + .15vw, 13.5px)/1.6 Verdana, Geneva, "DejaVu Sans", sans-serif;
-  color: var(--ink);
+  font: clamp(15px, 14.4px + .15vw, 16px)/1.65 var(--face);
+  color: var(--text);
 }
 
+::selection { background: rgb(255 106 0 / .40); color: var(--text); }
+
+/* Scrollbars as ImGui draws them: royal grab on a night track. */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--night); }
+::-webkit-scrollbar-thumb {
+  background: var(--royal);
+  border: 2px solid var(--night);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover  { background: var(--royal-hi); }
+::-webkit-scrollbar-thumb:active { background: var(--orange); }
+
+/* The window. Night ground, a 2 px cyan frame, the glow outside it and a
+   royal rule 4 px inside it - Midtown's double frame. */
 #wrap {
+  position: relative;
   width: min(860px, 100%);
   margin: 0 auto;
-  background: var(--cream);
-  border: 3px outset var(--steel-lt);
-  box-shadow: 0 0 0 1px #0b1420, 6px 6px 0 rgba(0, 0, 0, .45);
+  background: rgb(6 10 58 / .985);
+  border: 2px solid rgb(60 200 255 / .85);
+  border-radius: var(--r-win);
+  box-shadow: var(--glow);
+}
+
+/* The inner rule sits over the contents, as the program draws its chrome
+   after a window's widgets. */
+#wrap::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  z-index: 5;
+  border: 1.5px solid rgb(47 76 255 / .59);
+  border-radius: calc(var(--r-win) - 4px);
+  pointer-events: none;
 }
 
 /* --------------------------------------------------------------------------
-   Banner
+   Banner - the logo lockup over the opening screen's backdrop
    -------------------------------------------------------------------------- */
 
 #banner {
+  --icon:   clamp(52px, 13vw, 84px);
+  --pad:    clamp(14px, 3.4vw, 24px);
+  --band-x: 66%;                       /* where the sunset starts at the top  */
+  --skew:   18px;                      /* how far its edge leans by the foot   */
   position: relative;
-  padding: clamp(12px, 3vw, 18px) clamp(10px, 3vw, 16px) clamp(10px, 2.5vw, 14px);
-  text-align: center;
-  border-bottom: 3px solid var(--navy);
-  background: linear-gradient(180deg, var(--sky-lt) 0%, var(--sky) 55%, var(--steel) 100%);
+  min-height: calc(var(--icon) + 2 * var(--pad));
+  /* the words keep to the night side of the edge */
+  padding: var(--pad) calc(100% - var(--band-x) + var(--skew) + 8px) var(--pad)
+           calc(var(--pad) + var(--icon) * 1.16);
+  border-radius: calc(var(--r-win) - 2px) calc(var(--r-win) - 2px) 0 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--night);
+  background-image:
+    url("../img/logo-128.png"),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(180deg, var(--grid-line) 1px, transparent 1px);
+  background-repeat: no-repeat, repeat, repeat;
+  background-position: var(--pad) center, 0 0, 0 0;
+  background-size: var(--icon) var(--icon), 24px 24px, 24px 24px;
 }
 
+#banner::before,
+#banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#banner::before {
+  background: var(--cyan);
+  clip-path: polygon(var(--band-x) 0, 100% 0, 100% 100%, calc(var(--band-x) - var(--skew)) 100%);
+}
+
+#banner::after {
+  background:
+    radial-gradient(circle 160px at 82% 92%,
+      rgb(255 158 77 / .45) 0, rgb(255 158 77 / .15) 40%, transparent 100%),
+    var(--sunset);
+  clip-path: polygon(calc(var(--band-x) + 7px) 0, 100% 0, 100% 100%,
+                     calc(var(--band-x) + 7px - var(--skew)) 100%);
+}
+
+/* The city lights out of focus: warm dots along the lower half of the
+   sunset, each fading in and out on its own phase and the row drifting
+   slowly - ui_backdrop.frag's lights, drawn by site.js. Clipped to the
+   sunset's side of the edge. */
+#banner .lights {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  clip-path: polygon(calc(var(--band-x) + 7px) 0, 100% 0, 100% 100%,
+                     calc(var(--band-x) + 7px - var(--skew)) 100%);
+}
+
+/* "onurb" in Farringdon with glow_text()'s treatment: a soft cyan glow and a
+   hard royal-blue drop. */
 #banner .logo {
   position: relative;
   z-index: 2;
   margin: 0;
-  font-family: "D-DIN", "Arial Narrow", Arial, sans-serif;
+  font-family: var(--title);
   font-weight: 700;
-  font-size: clamp(38px, 9vw, 62px);
+  font-size: calc(var(--icon) * .78);
   line-height: .95;
-  letter-spacing: clamp(1px, .3vw, 2px);
-  color: var(--amber);
-  background: linear-gradient(180deg, #fff1b8 0%, var(--amber) 45%, var(--orange) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  /* hard outline + drop shadow = boxed PC game logo */
-  filter: drop-shadow(0 0 1px #0b1420) drop-shadow(2px 2px 0 rgba(10, 20, 35, .5));
+  color: var(--text);
+  text-shadow:
+    -.025em 0 0 rgb(60 200 255 / .24),
+     .025em 0 0 rgb(60 200 255 / .24),
+     0 -.025em 0 rgb(60 200 255 / .24),
+     0  .025em 0 rgb(60 200 255 / .24),
+     .05em .05em 0 var(--royal);
 }
 
-#banner .logo a { text-decoration: none; color: inherit; }
+#banner .logo a { text-decoration: none; color: inherit; cursor: var(--cur-hand); }
 
+/* The line under the logo: an orange slanted tab, then the words in yellow
+   bold - where the program puts its version number. */
 #banner .sub {
   position: relative;
   z-index: 2;
-  margin: 6px 0 0;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  color: #fff;
-  text-shadow: 1px 1px 0 var(--navy);
+  margin: calc(var(--icon) * .06) 0 0;
+  font-weight: 700;
+  font-size: clamp(12px, 2.6vw, 15px);
+  line-height: 1.35;
+  color: var(--yellow);
+}
+
+#banner .sub::before {
+  content: "";
+  display: inline-block;
+  width: 1.6em;
+  height: .5em;
+  margin-right: .6em;
+  vertical-align: .12em;
+  background: var(--orange);
+  transform: skewX(-31deg);
 }
 
 /* --------------------------------------------------------------------------
-   Navigation - a row of chunky beveled buttons
+   Navigation - the menu bar: royal buttons on night, a glowing cyan rule
+   under it, the page you are on in orange
    -------------------------------------------------------------------------- */
 
-/* auto-fit: five buttons in a row on a desktop, two or three on a phone,
-   always filling the width evenly - no half-empty last row */
+/* auto-fit: six buttons in a row on a desktop, two or three on a phone,
+   always filling the width evenly */
 #nav {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
-  gap: 4px;
-  padding: 6px;
-  background: linear-gradient(180deg, var(--steel-lt), var(--steel));
-  border-bottom: 2px solid var(--border-dk);
+  gap: 6px;
+  padding: 9px 10px 10px;
+  background: rgb(6 10 58 / .97);
+  border-top: 2px solid var(--cyan);
+  border-bottom: 2px solid var(--cyan);
+  box-shadow:
+    0 1px 0 rgb(60 200 255 / .27),
+    0 2px 0 rgb(60 200 255 / .14),
+    0 3px 0 rgb(60 200 255 / .09),
+    0 4px 0 rgb(60 200 255 / .07);
 }
 
 #nav a {
-  padding: 9px 8px;
+  padding: 8px 8px;
   text-align: center;
-  font: bold clamp(11px, 2.6vw, 12px)/1 Verdana, Geneva, sans-serif;
-  letter-spacing: .5px;
-  color: var(--navy);
+  font: 700 clamp(13px, 3vw, 14px)/1.2 var(--face);
+  letter-spacing: .3px;
+  color: var(--text);
   text-decoration: none;
-  background: linear-gradient(180deg, #fdfdfd, var(--steel-lt));
-  border: 2px outset #fff;
+  background: var(--royal);
+  border: 1px solid rgb(60 200 255 / .85);
+  border-radius: var(--r-frame);
+  cursor: var(--cur-hand);
 }
 
-#nav a:hover {
-  color: #3a1a00;
-  background: linear-gradient(180deg, var(--amber), var(--orange));
-}
+#nav a:hover { background: var(--royal-hi); border-color: var(--yellow); }
 
-#nav a:active { border-style: inset; }
+#nav a:active { background: var(--orange); color: var(--night); }
 
 #nav a.here {
-  color: #3a1a00;
-  background: linear-gradient(180deg, var(--amber), var(--orange));
-  border-style: inset;
+  color: var(--night);
+  background: var(--orange);
+  border-color: var(--peach);
 }
+
+#nav a.here:hover { background: var(--orange-hi); border-color: var(--yellow); }
 
 /* --------------------------------------------------------------------------
    Content
    -------------------------------------------------------------------------- */
 
-#main { padding: clamp(10px, 2.6vw, 18px); }
+#main { padding: clamp(14px, 3vw, 22px); }
 
 #main img { max-width: 100%; height: auto; }
 
-a         { color: var(--link); }
-a:visited { color: var(--link-vis); }
-a:hover   { color: var(--orange); }
+a         { color: var(--yellow); cursor: var(--cur-hand); }
+a:visited { color: #ffa846; }
+a:hover   { color: var(--orange-hi); }
 
-h2, h3 {
-  font-family: "Trebuchet MS", Verdana, sans-serif;
-  color: var(--navy);
-  margin: 1.4em 0 .5em;
+:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
 }
 
+p, li, dd, td, blockquote, figcaption, .note { cursor: var(--cur-text); }
+
+p a, li a, dd a, td a { cursor: var(--cur-hand); }
+
+/* h2 is a screen title: Farringdon, white, the glow and the royal drop,
+   underlined in orange the way the program underlines a window's name. */
 h2 {
-  font-size: clamp(17px, 4vw, 20px);
+  margin: 1.3em 0 .55em;
+  padding-bottom: 4px;
+  font: 700 clamp(22px, 5vw, 28px)/1.15 var(--title);
+  letter-spacing: .3px;
+  color: var(--text);
   border-bottom: 2px solid var(--orange);
-  padding-bottom: 3px;
+  text-shadow:
+    -.025em 0 0 rgb(60 200 255 / .22),
+     .025em 0 0 rgb(60 200 255 / .22),
+     .06em .06em 0 var(--royal);
 }
 
-h3 { font-size: clamp(14px, 3.2vw, 15px); }
+/* h3 is a label: Noto bold in cyan, as the program labels a value. */
+h3 {
+  margin: 1.4em 0 .45em;
+  font: 700 clamp(15px, 3.4vw, 17px)/1.3 var(--face);
+  color: var(--cyan);
+}
+
+strong, b { color: #fff; }
 
 hr {
-  height: 3px;
+  height: 2px;
   border: 0;
-  margin: 20px 0;
-  background: repeating-linear-gradient(90deg,
-    var(--orange) 0 10px, var(--amber) 10px 20px);
+  margin: 22px 0;
+  background: rgb(60 200 255 / .45);
 }
 
+/* A quote is MM2's black plate: the place a screen explains its choice. */
 blockquote {
   margin: 14px 0;
-  padding: 8px 12px;
-  border-left: 5px solid var(--orange);
-  background: #fff8e8;
+  padding: 10px 14px;
+  color: var(--yellow);
+  background: var(--plate);
+  border: 2px solid rgb(47 76 255 / .86);
+  border-radius: 8px;
 }
 
 code, pre, kbd {
-  font-family: "Courier New", Courier, monospace;
-  background: #e8eef5;
-  border: 1px solid var(--steel);
+  font-family: var(--mono);
+  font-size: .9em;
+  color: var(--ice);
+  background: var(--navy);
+  border: 1px solid rgb(60 200 255 / .85);
+  border-radius: 4px;
 }
 
-code { padding: 1px 4px; }
+code { padding: 1px 5px; }
 
-pre { padding: 10px; overflow-x: auto; }
+pre {
+  padding: 10px 12px;
+  overflow-x: auto;
+  border-radius: var(--r-frame);
+}
 
 pre code { border: 0; padding: 0; background: none; }
+
+ul, ol { padding-left: 1.4em; }
+
+li::marker { color: var(--cyan); }
 
 /* a table is the one thing allowed to be wider than the column - put it in
    <div class="table-wrap"> and it scrolls on its own instead of pushing the
@@ -234,8 +414,9 @@ pre code { border: 0; padding: 0; background: none; }
 .table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  margin: 12px 0;
-  border: 1px solid var(--steel);
+  margin: 14px 0;
+  border: 2px solid rgb(60 200 255 / .50);
+  border-radius: 8px;
 }
 
 table { border-collapse: collapse; width: 100%; }
@@ -243,15 +424,23 @@ table { border-collapse: collapse; width: 100%; }
 .table-wrap table { border: 0; }
 
 th, td {
-  padding: 6px 8px;
-  border: 1px solid var(--steel);
+  padding: 7px 10px;
+  border: 1px solid rgb(27 47 208 / .60);
   text-align: left;
-  font-size: 12px;
+  font-size: 14px;
 }
 
-th { background: var(--steel-lt); color: var(--navy); }
+.table-wrap tr > :first-child { border-left: 0; }
+.table-wrap tr > :last-child  { border-right: 0; }
+.table-wrap tr:first-child > * { border-top: 0; }
+.table-wrap tr:last-child > *  { border-bottom: 0; }
 
-/* Status table: a Windows 95 progress bar - navy blocks in a sunken well.
+th { font-weight: 700; color: var(--cyan); background: var(--navy); }
+
+tr:nth-child(even) td { background: rgb(168 232 255 / .04); }
+
+/* Status table: the program's loading bar - a slanted navy track with a
+   cyan frame, filled in orange with stripes that move.
    <span class="meter"><span style="width: 70%"></span></span> */
 .status td:last-child { white-space: nowrap; width: 45%; }
 
@@ -261,16 +450,26 @@ th { background: var(--steel-lt); color: var(--navy); }
   width: calc(100% - 4.5em);
   min-width: 80px;
   height: 16px;
-  padding: 2px;
-  background: #fff;
-  border: 2px inset var(--steel-lt);
+  margin-left: 6px;
+  background: var(--navy);
+  border: 2px solid var(--cyan);
+  transform: skewX(-31deg);
 }
 
 .meter > span {
   display: block;
   height: 100%;
-  background: repeating-linear-gradient(90deg,
-    var(--navy-lt) 0 8px, transparent 8px 10px);
+  background:
+    repeating-linear-gradient(90deg,
+      rgb(255 154 31 / .59) 0 5px, transparent 5px 14px),
+    var(--orange);
+  box-shadow: 0 0 6px rgb(255 106 0 / .55);
+  animation: meter-run .6s linear infinite;
+}
+
+@keyframes meter-run {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 14px 0, 0 0; }
 }
 
 .pct {
@@ -278,164 +477,260 @@ th { background: var(--steel-lt); color: var(--navy); }
   width: 3.5em;
   margin-left: 6px;
   text-align: right;
-  font: bold 12px/1 "Courier New", Courier, monospace;
-  color: var(--navy);
+  font: 700 14px/1 var(--face);
+  font-variant-numeric: tabular-nums;
+  color: var(--yellow);
   vertical-align: middle;
 }
 
-/* Requirements page: a spec sheet off the back of a 1990s game box.
-   .spec  - row labels down the left, one column per tier
-   .bench - plain measurement tables
-   .note  - a small sticky-note aside under a table
+/* Requirements page: a spec sheet.
+   .spec  - row labels down the left, one column per tier, the
+            recommended tier in the orange of "the step forward"
+   .bench - measurement tables, the figures in yellow as values are
+   .note  - a black plate under a table
    .extras - the optional-hardware list */
 .spec th:first-child { width: 7.5em; }
 
 .spec tr:first-child th { vertical-align: bottom; }
 
 .spec th + th {
-  font-size: 13px;
-  color: #fff;
-  text-shadow: 1px 1px 0 var(--navy);
-  background: linear-gradient(180deg, var(--steel-dk), var(--navy-lt));
+  font-size: 15px;
+  color: var(--text);
+  background: var(--royal);
 }
 
 .spec th + th:last-child {
-  color: #3a1a00;
-  text-shadow: none;
-  background: linear-gradient(180deg, var(--amber), var(--orange));
+  color: var(--night);
+  background: var(--orange);
 }
 
 .spec .tier {
   display: block;
   margin-top: 2px;
-  font-size: 10px;
-  font-weight: normal;
-  line-height: 1.35;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  opacity: .9;
 }
 
 .spec td { vertical-align: top; width: 42%; }
 
-.spec tr:nth-child(odd) td,
-.bench tr:nth-child(odd) td { background: #f2f5f9; }
-
-.bench td + td { font-family: "Courier New", Courier, monospace; white-space: nowrap; }
+.bench td + td {
+  font-family: var(--face);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--yellow);
+  white-space: nowrap;
+}
 
 .note {
-  margin: 10px 0 16px;
-  padding: 7px 10px;
-  font-size: 11.5px;
-  background: #fff8e8;
-  border: 1px dashed var(--orange);
+  margin: 10px 0 18px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--yellow);
+  background: var(--plate);
+  border: 2px solid rgb(47 76 255 / .86);
+  border-radius: 8px;
 }
+
+.note b { color: #fff; }
 
 .extras { margin: 10px 0; }
 
 .extras dt {
-  margin-top: 10px;
-  padding: 3px 8px;
-  font-weight: bold;
-  color: var(--navy);
-  background: linear-gradient(90deg, var(--steel-lt), transparent);
+  margin-top: 12px;
+  padding: 4px 10px;
+  font-weight: 700;
+  color: var(--cyan);
+  background: linear-gradient(90deg, rgb(27 47 208 / .55), transparent);
   border-left: 4px solid var(--orange);
+  border-radius: 0 var(--r-frame) var(--r-frame) 0;
 }
 
-.extras dd { margin: 4px 0 0 12px; }
+.extras dd { margin: 6px 0 0 14px; }
 
-h2 .stamp { vertical-align: middle; margin-left: 6px; }
+h2 .stamp { vertical-align: middle; margin-left: 8px; text-shadow: none; }
 
 /* --------------------------------------------------------------------------
-   .win - a Windows-95-style panel, the workhorse of this layout:
+   .win - a titled panel, the workhorse of this layout:
    <div class="win"><b class="win-t">TITLE</b><div class="win-b">body</div></div>
+   A window inside the window: royal title bar with the orange rule under
+   it, a navy ground ruled with the grid, the cyan frame and its glow.
    -------------------------------------------------------------------------- */
 
 .win {
-  margin: 0 0 18px;
-  background: var(--steel-lt);
-  border: 2px outset #fff;
+  margin: 0 0 26px;
+  overflow: hidden;
+  background: rgb(12 22 112 / .94);
+  border: 2px solid rgb(60 200 255 / .85);
+  border-radius: var(--r-win);
+  box-shadow: var(--glow);
 }
+
+.win:last-child { margin-bottom: 8px; }
 
 .win-t {
   display: block;
-  padding: 4px 8px;
-  font: bold 12px/1.3 Verdana, Geneva, sans-serif;
-  letter-spacing: .5px;
-  color: #fff;
-  text-shadow: 1px 1px 0 #000;
-  background: linear-gradient(90deg, var(--navy) 0%, var(--navy-lt) 60%, var(--steel-dk) 100%);
+  padding: 7px 14px;
+  font: 700 clamp(14px, 3.2vw, 15px)/1.3 var(--face);
+  letter-spacing: .3px;
+  color: var(--text);
+  background: var(--royal);
+  border-bottom: 2px solid var(--orange);
 }
 
 .win-b {
-  padding: clamp(9px, 2.4vw, 12px);
-  background: #fbfbfb;
-  border: 2px inset var(--steel-lt);
+  padding: clamp(12px, 3vw, 18px);
+  background-image:
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(180deg, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--cell) var(--cell);
 }
 
 .win-b > :first-child { margin-top: 0; }
 .win-b > :last-child  { margin-bottom: 0; }
 
 /* --------------------------------------------------------------------------
-   Buttons
+   Buttons - MM2's arrows (arrow_button() in ui_mm2.cpp)
+   .btn      the one orange step forward, pointing right
+   .btn.alt  a way back, royal, pointing left
+   Two layers clipped to the arrow: the outline below, the fill inset by the
+   line width on top. The glow is a drop-shadow on the button itself, which
+   is not clipped. Geometry for a 44 px arrow: head 0.62 h, shaft inset 0.2 h.
    -------------------------------------------------------------------------- */
 
 .btn {
+  --h: 44px;
+  --fill: var(--orange);
+  --line: var(--peach);
+  --halo: rgb(255 106 0 / .55);
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
   display: inline-block;
-  margin: 4px 6px 4px 0;
-  padding: 10px 16px;
-  font: bold clamp(12px, 2.8vw, 13px)/1 Verdana, Geneva, sans-serif;
-  letter-spacing: .5px;
-  color: #3a1a00 !important;
+  margin: 6px 8px 6px 0;
+  height: var(--h);
+  padding: 0 46px 0 30px;
+  font: 700 clamp(14px, 3vw, 16px)/var(--h) var(--face);
+  letter-spacing: .2px;
+  white-space: nowrap;
+  color: var(--night) !important;
   text-decoration: none;
-  background: linear-gradient(180deg, var(--amber), var(--orange));
-  border: 3px outset #ffd97a;
+  cursor: var(--cur-hand);
+  filter: drop-shadow(0 0 3px var(--halo));
 }
 
-.btn:active { border-style: inset; }
+.btn::before,
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
 
-/* Not a link - a "coming soon" notice dressed as a button. */
+.btn::before {
+  background: var(--line);
+  clip-path: polygon(0 9px, calc(100% - 27px) 9px, calc(100% - 27px) 0, 100% 50%,
+                     calc(100% - 27px) 100%, calc(100% - 27px) calc(100% - 9px), 0 calc(100% - 9px));
+}
+
+.btn::after {
+  background: var(--fill);
+  clip-path: polygon(2.5px 11.5px, calc(100% - 24.5px) 11.5px, calc(100% - 24.5px) 5.2px,
+                     calc(100% - 4px) 50%, calc(100% - 24.5px) calc(100% - 5.2px),
+                     calc(100% - 24.5px) calc(100% - 11.5px), 2.5px calc(100% - 11.5px));
+}
+
+.btn:hover        { --fill: var(--orange-hi); --line: var(--yellow); }
+.btn:active       { --fill: var(--pressed); }
+.btn:focus-visible {
+  outline: none;
+  filter: drop-shadow(0 0 3px var(--halo)) drop-shadow(0 0 6px rgb(255 212 0 / .6));
+}
+
+/* Not a link - a "coming soon" notice dressed as the step forward. */
 .btn.soon,
-.btn.soon:active { cursor: default; border-style: outset; }
+.btn.soon:hover,
+.btn.soon:active { --fill: var(--orange); --line: var(--peach); cursor: var(--cur-arrow); }
 
+/* Back: royal, cyan outline, pointing left, the label in white. */
 .btn.alt {
-  color: #fff !important;
-  background: linear-gradient(180deg, var(--steel-dk), var(--navy));
-  border-color: var(--steel-lt);
+  --fill: var(--royal);
+  --line: var(--cyan);
+  --halo: rgb(60 200 255 / .5);
+  padding: 0 30px 0 46px;
+  color: var(--text) !important;
 }
+
+.btn.alt::before {
+  clip-path: polygon(100% 9px, 27px 9px, 27px 0, 0 50%,
+                     27px 100%, 27px calc(100% - 9px), 100% calc(100% - 9px));
+}
+
+.btn.alt::after {
+  clip-path: polygon(calc(100% - 2.5px) 11.5px, 24.5px 11.5px, 24.5px 5.2px,
+                     4px 50%, 24.5px calc(100% - 5.2px),
+                     24.5px calc(100% - 11.5px), calc(100% - 2.5px) calc(100% - 11.5px));
+}
+
+.btn.alt:hover  { --fill: var(--royal-hi); --line: var(--yellow); }
+.btn.alt:active { --fill: var(--navy); }
 
 /* --------------------------------------------------------------------------
-   Hero (home page)
+   Hero (home page) - the vehicle stage: a picture in the glowing frame
    -------------------------------------------------------------------------- */
 
 .hero {
   position: relative;
-  border: 3px inset var(--steel);
-  background: #0d1622;
+  overflow: hidden;
+  background: var(--night);
+  border: 2px solid var(--cyan);
+  border-radius: var(--r-win);
+  box-shadow: var(--glow);
   line-height: 0;
 }
 
 .hero img { display: block; width: 100%; height: auto; }
 
-/* Stand-in for a missing picture: a plain colour block the shape a
-   screenshot would be. Used when no image is set, or the image fails to
-   load. No file is fetched for it. */
+/* Stand-in for a missing picture: a block the shape a screenshot would be,
+   navy and ruled like an empty panel. No file is fetched for it. */
 .blank {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background: var(--steel-dk);
+  background-color: var(--navy);
+  background-image:
+    radial-gradient(ellipse at 50% 50%, rgb(47 76 255 / .35), transparent 70%),
+    linear-gradient(90deg, var(--grid-panel) 1px, transparent 1px),
+    linear-gradient(180deg, var(--grid-panel) 1px, transparent 1px);
+  background-size: auto, var(--cell) var(--cell), var(--cell) var(--cell);
 }
 
-.thumb .blank { border: 1px solid var(--border-dk); }
+.thumb .blank {
+  border: 1px solid rgb(47 76 255 / .86);
+  border-radius: var(--r-frame);
+}
 
 .hero .cap {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: clamp(6px, 2vw, 10px) clamp(8px, 2.4vw, 12px);
-  font: bold clamp(11px, 2.8vw, 13px)/1.4 Verdana, Geneva, sans-serif;
-  color: #fff;
-  text-shadow: 1px 1px 0 #000;
-  background: linear-gradient(180deg, transparent, rgba(10, 20, 35, .85));
+  padding: clamp(10px, 2.4vw, 14px) clamp(12px, 3vw, 18px);
+  font: 700 clamp(13px, 3vw, 15px)/1.4 var(--face);
+  color: var(--text);
+  background: linear-gradient(180deg, transparent, rgb(6 10 58 / .92));
+}
+
+.hero .cap::before {
+  content: "";
+  display: inline-block;
+  width: 1.4em;
+  height: .45em;
+  margin-right: .55em;
+  vertical-align: .14em;
+  background: var(--orange);
+  transform: skewX(-31deg);
 }
 
 /* --------------------------------------------------------------------------
@@ -447,21 +742,36 @@ h2 .stamp { vertical-align: middle; margin-left: 6px; }
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(210px, 100%), 1fr));
-  gap: clamp(8px, 2vw, 12px);
+  gap: clamp(16px, 3vw, 20px);
 }
 
 .grid.two { grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); }
 
+/* A card is the program's grid panel (begin_panel): navy, ruled, a cyan
+   frame with the glow. Pointed at, the frame turns yellow, as an arrow's
+   outline does. */
 .thumb {
   display: block;
-  padding: 5px;
-  background: linear-gradient(180deg, #fff, var(--steel-lt));
-  border: 2px outset #fff;
+  padding: 7px;
+  background-color: rgb(12 22 112 / .94);
+  background-image:
+    linear-gradient(90deg, var(--grid-panel) 1px, transparent 1px),
+    linear-gradient(180deg, var(--grid-panel) 1px, transparent 1px);
+  background-size: var(--cell) var(--cell);
+  border: 2px solid var(--cyan);
+  border-radius: var(--r-win);
+  box-shadow: var(--glow);
   text-decoration: none;
-  color: var(--ink) !important;
+  color: var(--text) !important;
 }
 
-.thumb:hover { background: linear-gradient(180deg, var(--amber), var(--orange)); }
+a.thumb { cursor: var(--cur-hand); }
+
+a.thumb:hover {
+  background-color: var(--royal);
+  border-color: var(--yellow);
+  box-shadow: var(--glow-hot);
+}
 
 /* aspect-ratio instead of a fixed pixel height - the card keeps its shape at
    every column width, and every row of the grid stays aligned */
@@ -471,29 +781,29 @@ h2 .stamp { vertical-align: middle; margin-left: 6px; }
   height: auto;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  border: 1px solid var(--border-dk);
-  background: #0d1622;
+  border: 1px solid rgb(47 76 255 / .86);
+  border-radius: var(--r-frame);
+  background: var(--night);
 }
 
 .thumb .t {
   display: block;
-  margin-top: 5px;
-  font-size: 11px;
-  font-weight: bold;
+  margin: 7px 2px 0;
+  font-size: 14px;
+  font-weight: 700;
   line-height: 1.35;
 }
 
 .thumb .d {
   display: block;
-  font: 10px/1.4 "Courier New", Courier, monospace;
-  color: var(--ink-soft);
+  margin: 1px 2px 0;
+  font: 700 12px/1.4 var(--face);
+  font-variant-numeric: tabular-nums;
+  color: var(--ice);
 }
 
-.thumb:hover .d { color: #4a2500; }
-
-/* play badge over video thumbs.
-   The triangle is centred on .shot, the wrapper around the image, so it stays
-   put at any card width - it is not pinned to a pixel offset. */
+/* play badge over video thumbs: an orange arrowhead with a night keyline,
+   centred on .shot, the wrapper round the image */
 .shot {
   position: relative;
   display: block;
@@ -507,53 +817,53 @@ h2 .stamp { vertical-align: middle; margin-left: 6px; }
   width: 0;
   height: 0;
   transform: translate(-45%, -50%);
-  border-left: clamp(16px, 5vw, 22px) solid var(--amber);
-  border-top: clamp(10px, 3.2vw, 14px) solid transparent;
-  border-bottom: clamp(10px, 3.2vw, 14px) solid transparent;
-  filter: drop-shadow(1px 1px 0 #000);
+  border-left: clamp(18px, 5vw, 24px) solid var(--orange);
+  border-top: clamp(11px, 3.2vw, 15px) solid transparent;
+  border-bottom: clamp(11px, 3.2vw, 15px) solid transparent;
+  filter: drop-shadow(0 0 1px var(--night)) drop-shadow(0 0 1px var(--night))
+          drop-shadow(0 0 5px rgb(255 106 0 / .6));
 }
 
 /* --------------------------------------------------------------------------
-   Subsection tabs - one per world, above the gallery grid
+   Subsection tabs - one per world, above the gallery grid: ImGui's tab bar
+   in this look, the chosen tab royal with an orange overline
    -------------------------------------------------------------------------- */
 
 .tabs {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  margin: 0 0 12px;
-  padding: 5px;
-  background: linear-gradient(180deg, var(--steel-lt), var(--steel));
-  border: 2px inset #fff;
+  margin: 0 0 18px;
+  padding: 0;
+  border-bottom: 2px solid var(--royal);
 }
 
 /* flex-grow, so the row always fills the width; wrap, so a long label drops
    to the next line instead of squeezing the others */
 .tab {
   flex: 1 1 auto;
-  padding: 8px 10px;
-  font: bold clamp(10px, 2.4vw, 11px)/1.2 Verdana, Geneva, sans-serif;
-  letter-spacing: .5px;
-  color: var(--navy);
-  cursor: pointer;
-  background: linear-gradient(180deg, #fdfdfd, var(--steel-lt));
-  border: 2px outset #fff;
+  padding: 8px 12px 7px;
+  font: 700 clamp(13px, 2.8vw, 14px)/1.25 var(--face);
+  color: var(--text);
+  cursor: var(--cur-hand);
+  background: rgb(6 10 58 / .85);
+  border: 1px solid rgb(27 47 208 / .9);
+  border-bottom: 0;
+  border-radius: var(--r-frame) var(--r-frame) 0 0;
 }
 
-.tab:hover {
-  color: #3a1a00;
-  background: linear-gradient(180deg, var(--amber), var(--orange));
-}
+.tab:hover { background: var(--royal-hi); }
 
 .tab.on {
-  color: #3a1a00;
-  background: linear-gradient(180deg, var(--amber), var(--orange));
-  border-style: inset;
+  background: var(--royal);
+  border-color: var(--royal);
+  box-shadow: inset 0 2px 0 var(--orange);
 }
 
 .tab .n {
-  font: 10px/1 "Courier New", Courier, monospace;
-  letter-spacing: 0;
+  font: 700 12px/1 var(--face);
+  font-variant-numeric: tabular-nums;
+  color: var(--yellow);
 }
 
 /* .thumb sets display: block, which would otherwise win over [hidden] */
@@ -561,12 +871,13 @@ h2 .stamp { vertical-align: middle; margin-left: 6px; }
 
 .g-empty {
   margin: 0;
-  padding: 18px 10px;
+  padding: 18px 12px;
   text-align: center;
-  font-size: 11px;
-  color: var(--ink-soft);
-  background: #f2f5f9;
-  border: 2px inset var(--steel-lt);
+  font-size: 14px;
+  color: var(--yellow);
+  background: var(--plate);
+  border: 2px solid rgb(47 76 255 / .86);
+  border-radius: 8px;
 }
 
 /* --------------------------------------------------------------------------
@@ -574,30 +885,43 @@ h2 .stamp { vertical-align: middle; margin-left: 6px; }
    -------------------------------------------------------------------------- */
 
 .newsitem {
-  margin: 0 0 16px;
-  padding: 0 0 14px;
-  border-bottom: 1px dashed var(--steel);
+  margin: 0 0 18px;
+  padding: 0 0 16px;
+  border-bottom: 1px solid rgb(60 200 255 / .30);
 }
 
 .newsitem:last-child { border-bottom: 0; }
 .newsitem h3 { margin: 0 0 4px; }
 
-/* News reads in Verdana throughout - headlines included, not Trebuchet.
-   .news wraps the archive and each post; .newsitem covers the home page's
-   Latest News box too. */
+/* News reads in the reading face throughout - headlines included, not the
+   title face. .news wraps the archive and each post; .newsitem covers the
+   home page's Latest News box too. */
 .news h2,
 .news h3,
-.newsitem h3 { font-family: Verdana, Geneva, sans-serif; }
+.newsitem h3 {
+  font-family: var(--face);
+  font-weight: 700;
+  letter-spacing: 0;
+}
 
+.news h2 { font-size: clamp(20px, 4.4vw, 24px); }
+
+.newsitem h3 a,
+.news h3 a { color: var(--text); text-decoration: none; }
+
+.newsitem h3 a:hover,
+.news h3 a:hover { color: var(--yellow); text-decoration: underline; }
+
+/* A date tag: the orange slanted tab, night ink. */
 .stamp {
   display: inline-block;
-  padding: 1px 6px;
-  font: bold 10px/1.5 Verdana, Geneva, sans-serif;
+  padding: 1px 12px;
+  font: 700 11px/1.6 var(--face);
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #7a3b00;
-  background: var(--amber);
-  border: 1px solid var(--orange);
+  color: var(--night);
+  background: var(--orange);
+  clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
 }
 
 /* --------------------------------------------------------------------------
@@ -611,8 +935,8 @@ h2 .stamp { vertical-align: middle; margin-left: 6px; }
   display: none;
   align-items: center;
   justify-content: center;
-  padding: clamp(8px, 3vw, 20px);
-  background: rgba(9, 15, 24, .9);
+  padding: clamp(14px, 3vw, 24px);
+  background: rgb(6 10 58 / .9);
 }
 
 #lb.on { display: flex; }
@@ -620,9 +944,11 @@ h2 .stamp { vertical-align: middle; margin-left: 6px; }
 #lb figure {
   margin: 0;
   max-width: 100%;
-  padding: 6px;
-  background: var(--steel-lt);
-  border: 3px outset #fff;
+  padding: 8px;
+  background: var(--night);
+  border: 2px solid var(--cyan);
+  border-radius: var(--r-win);
+  box-shadow: var(--glow);
 }
 
 #lb img {
@@ -631,61 +957,91 @@ h2 .stamp { vertical-align: middle; margin-left: 6px; }
   /* dvh, so an image is not cut off behind a phone browser's toolbars */
   max-height: 70vh;
   max-height: 70dvh;
-  border: 1px solid var(--border-dk);
+  border-radius: var(--r-frame);
 }
 
 #lb figcaption {
-  padding: 6px 4px 2px;
-  font-size: 12px;
-  color: var(--navy);
+  padding: 8px 4px 2px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ice);
 }
 
 #lb .x {
   position: absolute;
   top: 14px;
   right: 18px;
-  padding: 4px 12px;
-  font: bold 16px/1 Verdana, sans-serif;
-  cursor: pointer;
-  background: linear-gradient(180deg, var(--amber), var(--orange));
-  border: 3px outset #ffd97a;
+  padding: 6px 14px;
+  font: 700 16px/1 var(--face);
+  color: var(--text);
+  cursor: var(--cur-hand);
+  background: var(--royal);
+  border: 1px solid var(--cyan);
+  border-radius: var(--r-frame);
 }
 
+#lb .x:hover  { background: var(--royal-hi); border-color: var(--yellow); }
+#lb .x:active { background: var(--orange); color: var(--night); }
+
 /* --------------------------------------------------------------------------
-   Footer
+   Footer - the key-hint strip along the bottom of a screen
    -------------------------------------------------------------------------- */
 
 #foot {
-  padding: 12px 16px 16px;
+  padding: 16px 18px 20px;
   text-align: center;
-  font: 11px/1.7 Verdana, Geneva, sans-serif;
-  color: #d8e2ee;
-  background: linear-gradient(180deg, var(--navy-lt), var(--navy));
-  border-top: 3px solid var(--orange);
+  font: 13px/1.7 var(--face);
+  color: var(--ice);
+  background: rgb(4 8 28 / .6);
+  border-top: 2px solid var(--cyan);
+  border-radius: 0 0 calc(var(--r-win) - 2px) calc(var(--r-win) - 2px);
+  box-shadow:
+    0 -1px 0 rgb(60 200 255 / .27),
+    0 -2px 0 rgb(60 200 255 / .14),
+    0 -3px 0 rgb(60 200 255 / .09);
 }
 
-#foot a { color: var(--amber); }
+#foot a { color: var(--yellow); }
 
+/* The visit count in the program's value field (spinner_field): a navy
+   well framed in royal, the number in yellow, the orange dot. */
 .counter {
+  position: relative;
   display: inline-block;
-  margin: 4px 0;
-  padding: 3px 8px;
-  font: bold 15px/1 "Courier New", Courier, monospace;
-  letter-spacing: 4px;
-  color: #4dff7a;
-  background: #06110a;
-  border: 2px inset #2f5e3d;
+  margin: 6px 0;
+  padding: 5px 30px 5px 14px;
+  font: 700 17px/1.2 var(--face);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 3px;
+  color: var(--yellow);
+  background: var(--field);
+  border: 2px solid var(--royal-hi);
+  border-radius: 8px;
+}
+
+.counter::after {
+  content: "";
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: var(--orange);
 }
 
 .badge {
   display: inline-block;
   margin: 6px 4px 0;
-  padding: 3px 8px;
-  font: bold 10px/1.4 Verdana, sans-serif;
+  padding: 3px 16px;
+  font: 700 12px/1.4 var(--face);
   letter-spacing: .5px;
-  color: #3a1a00;
-  background: linear-gradient(180deg, var(--amber), var(--orange));
-  border: 2px outset #ffd97a;
+  color: var(--night);
+  background:
+    repeating-linear-gradient(-59deg, transparent 0 8px, rgb(255 154 31 / .7) 8px 13px),
+    var(--orange);
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
 }
 
 /* --------------------------------------------------------------------------
@@ -695,22 +1051,23 @@ h2 .stamp { vertical-align: middle; margin-left: 6px; }
    only handle the things that need a decision rather than an interpolation.
    -------------------------------------------------------------------------- */
 
-/* Tablet and below: the drop shadow and the deep outer gutter stop earning
-   their space. */
 @media (max-width: 760px) {
   body { padding-bottom: 24px; }
 
-  #wrap { box-shadow: 0 0 0 1px #0b1420, 3px 3px 0 rgba(0, 0, 0, .45); }
+  #banner { --band-x: 74%; --skew: 14px; }
 }
 
-/* Phone: stack the call-to-action buttons full width so they are thumb-sized,
-   and let the news grid go to one column. */
+/* Phone: the sunset shrinks to a sliver at the banner's edge so the words
+   keep the night side, the call-to-action arrows go full width so they are
+   thumb-sized, and the news grid goes to one column. */
 @media (max-width: 520px) {
-  #wrap { border-width: 2px; }
+  #wrap { border-radius: 8px; }
+
+  #banner { --band-x: 88%; --skew: 10px; }
 
   .btn {
     display: block;
-    margin: 6px 0;
+    margin: 8px 0;
     text-align: center;
   }
 
@@ -719,35 +1076,47 @@ h2 .stamp { vertical-align: middle; margin-left: 6px; }
   .thumb img,
   .thumb .blank { aspect-ratio: 2 / 1; }
 
-  #foot { padding: 10px 10px 14px; }
-
-  .badge { font-size: 9px; }
+  #foot { padding: 14px 12px 16px; }
 }
 
-/* Very narrow: give the nav two even columns instead of cramped thirds. */
+/* Very narrow: two even nav columns instead of cramped thirds. */
 @media (max-width: 380px) {
   #nav { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Wide screens: the page stays a fixed column, the way it was drawn. It does
-   not stretch to 2000px, because that was never the look. */
 @media (min-width: 1400px) {
-  body { padding-block: 32px 60px; }
+  body { padding-block: 40px 60px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meter > span { animation: none; }
 }
 
 /* Print: drop the chrome, keep the words. */
 @media print {
-  html, body { background: #fff; padding: 0; }
+  html, body { background: #fff; color: #000; padding: 0; }
 
-  #wrap { width: 100%; border: 0; box-shadow: none; background: #fff; }
+  #wrap, .win, .thumb, .hero { box-shadow: none; }
 
-  #nav, #foot, #lb { display: none; }
+  #wrap { width: 100%; border: 0; background: #fff; }
 
-  #banner { background: #fff; border-bottom: 2px solid #000; }
+  #wrap::after, #nav, #foot, #lb { display: none; }
 
-  #banner .logo { -webkit-text-fill-color: #000; color: #000; filter: none; }
+  #banner { background: #fff; border-bottom: 2px solid #000; padding-left: 0; }
 
-  .win, .win-b { border: 1px solid #000; background: #fff; }
+  #banner::before, #banner::after, #banner .lights { display: none; }
 
-  .win-t { background: #fff; color: #000; text-shadow: none; border-bottom: 1px solid #000; }
+  #banner .logo, h2 { color: #000; text-shadow: none; }
+
+  #banner .sub { color: #000; }
+
+  h3, th, .note, blockquote, .pct, .bench td + td { color: #000; }
+
+  a { color: #000; }
+
+  .win, .win-b, .note, blockquote { border: 1px solid #000; background: #fff; }
+
+  .win-t { background: #fff; color: #000; border-bottom: 1px solid #000; }
+
+  th { background: #eee; }
 }

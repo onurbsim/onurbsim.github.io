@@ -128,6 +128,103 @@
   });
 
   /* ----------------------------------------------------------------------
+     Banner city lights - the out-of-focus lights of the program's backdrop
+     (assets/shaders/ui_backdrop.frag): a lattice of cells, about a third
+     of them lit, each light at its own spot in its cell, twinkling on its
+     own phase, fading in down the lower half and the whole row drifting
+     left. The shader's lattice is 14 cells to a full screen's height; on a
+     banner this short that is a 2 px grain, so here the lattice is coarser
+     and the lights larger and brighter. The clock is the wall clock, so
+     the lights carry on where they were from page to page.
+     ---------------------------------------------------------------------- */
+
+  var lights = document.querySelector('#banner .lights');
+
+  if (lights && lights.getContext) {
+    var ctx = lights.getContext('2d');
+    var still = window.matchMedia &&
+                matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ROWS = 10;                        /* cells to the banner's height */
+    var shown = true;
+    var last = 0;
+
+    var fract = function (x) { return x - Math.floor(x); };
+
+    /* the shader's hash(), on a cell and an offset added to both axes */
+    var hash = function (x, y, k) {
+      x = fract((x + k) * 123.34);
+      y = fract((y + k) * 456.21);
+      var d = x * (x + 45.32) + y * (y + 45.32);
+      return fract((x + d) * (y + d));
+    };
+
+    var smooth = function (a, b, x) {
+      x = Math.min(Math.max((x - a) / (b - a), 0), 1);
+      return x * x * (3 - 2 * x);
+    };
+
+    var draw = function (now) {
+      var dpr = window.devicePixelRatio || 1;
+      var w = Math.round(lights.clientWidth * dpr);
+      var h = Math.round(lights.clientHeight * dpr);
+      if (!w || !h) return;
+      if (lights.width !== w || lights.height !== h) {
+        lights.width = w;
+        lights.height = h;
+      }
+
+      var t = (now / 1000) % 100000;
+      var c = h / ROWS;                   /* one cell, device pixels */
+      var drift = t * 0.06;               /* cells */
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'lighter';
+
+      for (var j = Math.floor(ROWS * 0.45); j < ROWS; j++) {
+        for (var i = Math.floor(drift); i <= Math.ceil(drift + w / c); i++) {
+          if (hash(i, j, 3) < 0.62) continue;
+
+          var x = (i + hash(i, j, 0) * 0.6 + 0.2 - drift) * c;
+          var y = (j + hash(i, j, 7) * 0.6 + 0.2) * c;
+          var tw = 0.55 + 0.45 * Math.sin(t * (0.5 + hash(i, j, 9)) +
+                                          hash(i, j, 0) * 6.28);
+          var a = 0.8 * tw * smooth(0.5, 0.9, y / h);
+          if (a <= 0) continue;
+
+          var g = ctx.createRadialGradient(x, y, 0.06 * c, x, y, 0.3 * c);
+          g.addColorStop(0, 'rgba(255,199,122,' + a + ')');
+          g.addColorStop(0.5, 'rgba(255,199,122,' + a / 2 + ')');
+          g.addColorStop(1, 'rgba(255,199,122,0)');
+          ctx.fillStyle = g;
+          ctx.fillRect(x - 0.3 * c, y - 0.3 * c, 0.6 * c, 0.6 * c);
+        }
+      }
+    };
+
+    /* about 30 frames a second is plenty for something this slow, and
+       nothing at all while the banner is scrolled away */
+    var tick = function () {
+      var now = Date.now();
+      if (shown && now - last > 33) {
+        last = now;
+        draw(now);
+      }
+      requestAnimationFrame(tick);
+    };
+
+    if (window.IntersectionObserver) {
+      new IntersectionObserver(function (es) {
+        shown = es[0].isIntersecting;
+      }).observe(lights);
+    }
+
+    window.addEventListener('resize', function () { draw(Date.now()); });
+
+    if (still) draw(Date.now());
+    else requestAnimationFrame(tick);
+  }
+
+  /* ----------------------------------------------------------------------
      Visitor counter.
      GitHub Pages has no server, so the count lives in the free Abacus API
      (namespace and key come from _config.yml). A visit is counted once per

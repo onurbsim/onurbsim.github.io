@@ -1,12 +1,22 @@
-Copyright (C) 2017 Datto Inc. https://www.datto.com/fonts/d-din,
-with Reserved Font Names "D-DIN".
+Farringdon Bold - assets/fonts/Farringdon-Bold.otf
 
-Copyright (C) 2017 Datto Inc. https://www.datto.com/fonts/d-din,
-with Reserved Font Names "D-DIN Condensed".
+The file is the upstream original, unmodified (SHA-256
+18a776ebe5bef9939194fc305396ecfc667a820c654ed0ec853a165663fb62cd), from
+https://github.com/ezgranet/farringdon at commit
+33165a4458d62c67be5232495ae2de35bc7ebeeb - the same file the onurb program
+uses as its Midtown interface's title face.
 
-Copyright (C) 2017 Datto Inc. https://www.datto.com/fonts/d-din,
-with Reserved Font Names "D-DIN Expanded".
+Font name table:
+  Stephen Moye, Providence, RI, Version 1.1, February 1997
+  In homage to Edward Johnston
+  Names fixed, OpenType features added, by Elijah Granet, March 2022
 
+From the upstream README: Stephen Moye released his original design as
+freeware without specifying a licence, allowing all uses, and did not
+restrict its future re-licensing; Elijah Granet relicensed it under the SIL
+Open Font License, which also covers the characters and ligatures it takes
+from Railway Sans (Greg Fleming) and Hammersmith One, both OFL typefaces.
+No Reserved Font Name is declared.
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at: http://scripts.sil.org/OFL

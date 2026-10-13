@@ -82,28 +82,43 @@ clicks, so no YouTube request is made on page load. An entry without a
 
 ## Changing the look
 
-Everything is in `assets/css/main.css`. The Midtown Madness 2 palette is the
-block of CSS variables at the top - change those and the whole site follows.
+Everything is in `assets/css/main.css`. The site wears the program's own
+"Midtown" interface (the default in-game look, after Midtown Madness 2's front
+end): night blue with a cyan grid, glowing double frames, royal-blue buttons,
+orange for what is selected or next, yellow for values and links, and an
+abstract city sunset down the right of the backdrop. The palette is the block
+of CSS variables at the top, the same colours as `mm2ui::k*` in the program's
+`src/core/ui_mm2.h` - change those and the whole site follows.
+
+Faces: **Farringdon Bold** for the logo and the big titles only (`h2`),
+served from `assets/fonts/` (SIL OFL 1.1, licence in
+`assets/fonts/OFL-Farringdon.txt`). It is Latin only and has no `+`; a
+missing character falls back to Noto Sans. **Noto Sans** for everything that
+is read, from Google Fonts (linked in `_layouts/default.html`). The cursors in
+`assets/img/cursors/` are the program's own.
 
 The reusable pieces:
 
 | Class | What it is |
 |---|---|
-| `.win` + `.win-t` + `.win-b` | Windows 95 style titled panel |
-| `.btn` / `.btn.alt` | Beveled orange / navy button |
+| `.win` + `.win-t` + `.win-b` | Titled panel: royal title bar with an orange rule, navy ruled ground, cyan frame and glow |
+| `.btn` / `.btn.alt` | MM2 arrow button: orange pointing right (go) / royal pointing left (back) |
 | `.grid` / `.grid.two` | Responsive card grid, one column on a phone |
-| `.thumb` | Gallery or video card |
+| `.thumb` | Gallery or video card - a framed grid panel |
 | `.tabs` + `.tab` | Row of subsection tabs above the gallery grid |
-| `.shot` | Wrapper that puts a play triangle over a thumbnail |
+| `.shot` | Wrapper that puts a play arrowhead over a thumbnail |
 | `.hero` | Full-width image with caption overlay |
-| `.stamp` | Small amber date tag |
+| `.stamp` | Small orange slanted date tag |
+| `.note` / `blockquote` | MM2's black plate, yellow text |
+| `.meter` | The program's slanted, striped progress bar |
 | `.table-wrap` | Wrap any `<table>` in this so it scrolls instead of the page |
 
 The layout is fluid: `clamp()` for type and spacing, `auto-fit` grids for the
 nav and the card rows, `aspect-ratio` for thumbnails. It holds from 320px up,
-and stops growing at 860px because a fixed centre column is the look. Four
-breakpoints (760 / 520 / 380 / 1400px) plus a print stylesheet are at the
-bottom of the file.
+and stops growing at 860px because a fixed centre column is the look. The
+sunset band beside the column appears from 1180px; on a phone it shrinks to a
+sliver at the banner's edge. Breakpoints (760 / 520 / 380 / 1180 / 1400px), a
+reduced-motion rule and a print stylesheet are at the bottom of the file.
 
 ## Visitor counter
 
@@ -133,8 +148,9 @@ _data/             gallery.yml, videos.yml - the content you edit most
 _layouts/          default (frame), page, post
 _posts/            one markdown file per news item
 assets/css/        main.css - the whole design
+assets/fonts/      Farringdon-Bold.otf + its OFL licence
 assets/js/         site.js - lightbox, gallery tabs, video embeds, visitor counter
-assets/img/        screens/, thumbs/, favicon.svg
+assets/img/        screens/, thumbs/, favicon.svg, logo-128.png, cursors/
 index.md           home page
 about.md news.md gallery.md videos.md
 404.html

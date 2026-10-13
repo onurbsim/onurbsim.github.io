@@ -32,7 +32,7 @@ behaviour, not their code.
 Nothing from any of the games ships with onurb either. The engine points at
 your own installation and reads it in place.
 
-I recently came to know that there are some very interesting projects that also recreated OMSI 2 environment, also featuring multiplayer features and improved graphics. For now, multiplayer is not on the roadmap. Also I'm not a graphics rendering expert, so you might feel that the graphics of onurb feels like old-style OMSI.
+I recently came to know that there are some very interesting projects that also recreated OMSI 2 environment, also featuring multiplayer features and improved graphics. Multiplayer is not a feature for the early iterations of onurb, as I'm still concerned about the security aspects of it. Also I'm not a graphics rendering expert, so you might feel that the graphics of onurb feels like old-style OMSI.
 
 ## Why
 
@@ -73,7 +73,7 @@ conclusion that implementing an engine of its own made more sense.
 
 - **C++**, CMake, Ninja
 - GCC - through MSYS2 UCRT64 on Windows, natively on Linux
-- Runs on **Windows** and **Linux**, and possibly **macOS** as well
+- Runs on **Windows** and **macOS** (Apple Silicon), with an experimental **Linux** build
 - Rendering on OpenGL and Vulkan, plus Direct3D 12 on Windows
 - NVIDIA DLSS on Direct3D 12 and Vulkan (Windows)
 - VR through OpenXR - tested with a Meta Quest 3 over Virtual Desktop
@@ -112,8 +112,8 @@ onurb stands on these open-source projects. Thank you to everyone behind them.
 ## Requirements
 
 Windows 10 or 11, 64-bit, with a processor that supports AVX2 and a graphics
-card with OpenGL 4.6 - roughly anything from 2016 onward. Linux and macOS
-builds are experimental. Minimum and recommended specifications, with figures
+card with OpenGL 4.6 - roughly anything from 2016 onward. macOS on Apple
+Silicon works too; the Linux build is experimental. Minimum and recommended specifications, with figures
 measured on the test machine, are on the
 <a href="{{ '/requirements/' | relative_url }}">requirements page</a>.
 
@@ -151,5 +151,5 @@ I'm **{{ site.author }}** and I've worked in some OMSI projects in the past:
 Version {{ site.release.version }} is planned for **{{ site.release.date }}**.
 Follow the <a href="{{ '/news/' | relative_url }}">news page</a> for updates.
 
-onurb is, first of all, a very personal project, and its source code is not
-public for now, since I'm still working on some specific aspects.
+onurb is, first of all, a very personal project. Its source code will be
+released soon.
