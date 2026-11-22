@@ -24,6 +24,16 @@ url:     "https://onurbsim.github.io"
 baseurl: ""
 # ---------------------------------------------------------------------------
 
+# --- Coming-soon mode ------------------------------------------------------
+# While true, the site shows only a "coming soon" home page: no navigation,
+# no footer links, a neutral title/description, and no feed links. The other
+# pages and the news posts are also left out of the build (see the
+# "coming soon" block under `exclude:` at the bottom of this file), so they
+# are not published at all.
+# To launch: set this to false, delete that block under `exclude:`, and
+# delete the placeholder feed.xml in the repository root.
+coming_soon: true
+
 # Next release, shown on the home page and the About page.
 release:
   version: "0.1"
@@ -70,3 +80,12 @@ exclude:
   - Gemfile.lock
   - README.md
   - vendor
+  # --- coming soon: delete from here down to launch the full site ---------
+  - about.md
+  - gallery.md
+  - news.md
+  - requirements.md
+  - videos.md
+  - _posts
+  - assets/img/screens
+  - assets/img/thumbs

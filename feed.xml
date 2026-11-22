@@ -1,0 +1,13 @@
+---
+layout: null
+# Coming-soon placeholder. While this file exists, jekyll-feed does not
+# generate its own feed (which would publish the posts and the full site
+# description). Delete this file when launching the full site.
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ site.title }}</title>
+  <id>{{ site.url }}/</id>
+  <link href="{{ site.url }}/"/>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+</feed>

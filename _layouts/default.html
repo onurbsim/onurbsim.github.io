@@ -3,7 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- if site.coming_soon %}
+  <title>{{ site.title }} - coming soon</title>
+  <meta name="description" content="{{ site.title }} - coming soon.">
+  {%- else %}
   {%- seo -%}
+  {%- endif %}
   <meta name="theme-color" content="#060a3a">
   <meta name="color-scheme" content="dark">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +16,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap">
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   <link rel="icon" href="{{ '/assets/img/favicon.svg' | relative_url }}" type="image/svg+xml">
-  {%- feed_meta -%}
+  {%- unless site.coming_soon %}{% feed_meta %}{% endunless %}
 </head>
 <body>
 
@@ -23,22 +28,26 @@
     <p class="sub">{{ site.tagline }}</p>
   </div>
 
+  {%- unless site.coming_soon %}
   <div id="nav">
     {%- for item in site.nav -%}
       {%- assign href = item.url | relative_url -%}
       <a href="{{ href }}"{% if page.url == item.url %} class="here"{% endif %}>{{ item.title }}</a>
     {%- endfor -%}
   </div>
+  {%- endunless %}
 
   <div id="main">
     {{ content }}
   </div>
 
   <div id="foot">
+    {%- unless site.coming_soon %}
     <p>
       <a href="{{ '/feed.xml' | relative_url }}">RSS</a> &middot;
       <a href="{{ '/about/' | relative_url }}">About</a>
     </p>
+    {%- endunless %}
     {%- if site.counter.namespace %}
     <p id="hits-box" hidden>
       You are visitor number<br>

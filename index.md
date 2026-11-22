@@ -6,6 +6,17 @@ title: Home
 hero_image: 
 hero_caption: "Driving an OMSI 2 map in the onurb engine."
 ---
+{%- if site.coming_soon %}
+
+<div class="win">
+  <b class="win-t">Coming soon</b>
+  <div class="win-b" style="text-align:center;">
+    <p style="font-family:'Farringdon','Noto Sans',sans-serif; font-weight:700; font-size:clamp(40px, 11vw, 72px); line-height:1; margin:10px 0 18px; color:var(--orange); text-shadow:.05em .05em 0 var(--royal);">Coming soon</p>
+    <p>Something is being built here. Check back soon.</p>
+  </div>
+</div>
+
+{%- else %}
 
 <div class="hero">
   {%- if page.hero_image %}
@@ -110,4 +121,6 @@ hero_caption: "Driving an OMSI 2 map in the onurb engine."
     <p style="margin-top:12px;"><a href="{{ '/videos/' | relative_url }}">All videos &raquo;</a></p>
   </div>
 </div>
+{%- endif %}
+
 {%- endif %}
